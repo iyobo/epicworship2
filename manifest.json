@@ -1,14 +1,14 @@
 {
   "manifest_version": 2,
-  "name": "dreamops",
-  "short_name": "dreamops",
+  "name": "epicworship",
+  "short_name": "epicworship",
   "description": "",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "minimum_chrome_version": "38",
 
   "icons": {
-    "16": "assets/icon_16.png",
-    "128": "assets/icon_128.png"
+    "16": "assets/img/icon_16.png",
+    "128": "assets/img/icon_128.png"
   },
 
   "app": {

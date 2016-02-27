@@ -53,7 +53,7 @@
 	  whiteout.addClass('animated fadeOut');
 	  
 	  $("#bgbtn").on("click",function(e){
-	    $('#bgvid source').attr('src', "assets/bright.mp4");
+	    $('#bgvid source').attr('src', "bg/video/bright.mp4");
 	    whiteout.removeClass('fadeOut');
 	    whiteout.addClass('fadeIn');
 	    whiteout.one('animationend', function(){

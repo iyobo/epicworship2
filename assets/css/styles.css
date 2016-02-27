@@ -44,7 +44,7 @@ video#bgvid {
 }
 
 #whiteout_layer{
-  background-color: black;
+  background-color: white;
   z-index: -1;
   
   position: fixed;
