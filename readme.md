@@ -1,5 +1,10 @@
 EpicWorship 2
 
+*Dev Requirments*
+- Chrome
+- Chrome App IDE
+- Nodejs/npm
+
 *Initial setup*
 - Run `sudo . setup.sh`
 - open and run the app in Google Chrome App IDE
