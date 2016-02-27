@@ -38,7 +38,7 @@ video.bgvideo {
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
   
-  text-shadow: 0px 0px 80px #000, 0px 0px 80px #000, 0px 0px 80px #000, 0px 0px 80px #000, 0px 0px 80px #000, 0px 0px 80px #000, 0px 0px 80px #000;
+  text-shadow: #000 0px 0px 10px,#000 0px 0px 30px,#000 0px 0px 50px,#000 0px 0px 70px;
   
   z-index: 5;
 }

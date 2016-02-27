@@ -50,12 +50,10 @@
 
 	window.onload = function() {
 	  var vid = $("#bgvid");
-	  // var whiteout = $("#whiteout_layer");
-	  // whiteout.addClass('animated fadeOut');
 	  
 	  $("#bgbtn").on("click",function(e){
-	    $('#bgvid source').attr('src', "bg/video/bright.mp4");
-	    // whiteout.removeClass('fadeOut');
+	    $('#bgvid source').attr('src', "../bg/video/bright.mp4");
+
 	    vid.addClass('animated fadeOut');
 	    vid.one('animationend', function(){
 	      vid[0].load();

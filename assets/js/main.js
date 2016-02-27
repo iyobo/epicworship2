@@ -6,7 +6,7 @@ window.onload = function() {
   var vid = $("#bgvid");
   
   $("#bgbtn").on("click",function(e){
-    $('#bgvid source').attr('src', "bg/video/bright.mp4");
+    $('#bgvid source').attr('src', "../bg/video/bright.mp4");
 
     vid.addClass('animated fadeOut');
     vid.one('animationend', function(){
