@@ -4,5 +4,5 @@ EpicWorship 2
 - Run `sudo . setup.sh`
 - open and run the app in Google Chrome App IDE
 
-* Development/ Hot-compile *
+*Development/ Hot-compile*
 - run `. dev.sh` to launch webpack on watch mode so you don't have to actively compile everytime you make a change.
