@@ -1,6 +1,6 @@
 EpicWorship 2
 
-*Dev Requirments*
+*Dev Requirements*
 - Chrome
 - Chrome App IDE
 - Nodejs/npm
