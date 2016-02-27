@@ -4,7 +4,7 @@ body{
   background-color: white;
 }
 
-video#bgvid { 
+video.bgvideo { 
     position: fixed;
     top: 50%;
     left: 50%;
