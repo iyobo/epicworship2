@@ -13,7 +13,7 @@
 
   "app": {
     "background": {
-      "scripts": ["background.js"]
+      "scripts": ["init.js"]
     }
   }
 }
