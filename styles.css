@@ -17,7 +17,7 @@ video#bgvid {
     -moz-transform: translateX(-50%) translateY(-50%);
     -webkit-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
-    background: url(polina.jpg) no-repeat;
+    background-color: white;
     background-size: cover; 
 }
 
@@ -44,7 +44,7 @@ video#bgvid {
 }
 
 #whiteout_layer{
-  background-color: white;
+  background-color: black;
   z-index: -1;
   
   position: fixed;
