@@ -18,8 +18,7 @@ asyncdialog.stderr.on('data', (data) => {
 });
 
 asyncdialog.on('close', (code) => {
-	//TODO: Restart asyncdialog app
-	console.log(`child process exited with code ${code.toString()}`);
+	console.log(`asyncdialog process exited with code ${code.toString()}.`);
 })
 
 
