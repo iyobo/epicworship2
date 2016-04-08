@@ -1,15 +1,12 @@
 {
-  "name": "epicWorship2",
+  "name": "electronfilechooser",
   "version": "0.1.0",
-  "main": "main.js",
+  "main": "dialog.js",
   "devDependencies": {
     "electron-prebuilt": "^0.37.5"
   },
   "scripts": {
     "start": "electron ."
-  },
-  "dependencies": {
-    "electron-workers": "^1.6.0",
-    "workerjs": "^0.1.1"
   }
+
 }
