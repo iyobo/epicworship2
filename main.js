@@ -7,18 +7,19 @@ var dashboard;
 var electronBin = "./node_modules/.bin/electron"
 
 
-var dialog = require('child_process').spawn(electronBin,['forks/dialog']);
-dialog.stdout.on('data', (data) => {
-	console.log("from Dialog",data);
+var asyncdialog = require('child_process').spawn(electronBin,['forks/dialog']);
+asyncdialog.stdout.on('data', (data) => {
+	console.log("from Dialog",JSON.stringify(data.toString()));
 	//TODO: send filepath to render process to do stuff, e.g. transition with new video file
 });
 
-dialog.stderr.on('data', (data) => {
-	console.log(`dialog error: ${data}`);
+asyncdialog.stderr.on('data', (data) => {
+	console.log(`dialog error: ${data.toString()}`);
 });
 
-dialog.on('close', (code) => {
-	console.log(`child process exited with code ${code}`);
+asyncdialog.on('close', (code) => {
+	//TODO: Restart asyncdialog app
+	console.log(`child process exited with code ${code.toString()}`);
 })
 
 
@@ -36,5 +37,5 @@ app.on("ready", function () {
 });
 
 function openFileChooser(){
-	dialog.stdin.write('openFileChooser')
+	asyncdialog.stdin.write('openFileChooser')
 }
