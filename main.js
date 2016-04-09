@@ -19,9 +19,7 @@ asyncdialog.stderr.on('data', (data) => {
 
 asyncdialog.on('close', (code) => {
 	console.log(`asyncdialog process exited with code ${code.toString()}.`);
-})
-
-
+});
 
 app.on("ready", function () {
 	projector = new BrowserWindow({width: 600, height: 800});
