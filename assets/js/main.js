@@ -25,22 +25,22 @@ window.onload = function () {
         });
 
     });
-
-    var client = new scp({
-        port: 22,
-        host: 'git.esific.com',
-        username: 'root',
-        //privateKey: '....',
-        password: 'Techlord12345'
-    });
-    
-    client.download("root@git.esific.com", "/projects/downloaded.txt", function (err) {
-        if(err){
-            console.log(err);
-        }
-        else{
-            console.log("Successfully downloaded!");
-        }
-    });
+	//
+    // var client = new scp({
+    //     port: 22,
+    //     host: 'git.esific.com',
+    //     username: 'root',
+    //     //privateKey: '....',
+    //     password: 'Techlord12345'
+    // });
+    //
+    // client.download("root@git.esific.com", "/projects/downloaded.txt", function (err) {
+    //     if(err){
+    //         console.log(err);
+    //     }
+    //     else{
+    //         console.log("Successfully downloaded!");
+    //     }
+    // });
 
 };

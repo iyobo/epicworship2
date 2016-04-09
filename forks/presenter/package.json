@@ -1,7 +1,7 @@
 {
-  "name": "electronfilechooser",
+  "name": "ew-presenter",
   "version": "0.1.0",
-  "main": "dialog.js",
+  "main": "presenter.js",
   "devDependencies": {
     "electron-prebuilt": "^0.37.5"
   },
