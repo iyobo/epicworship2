@@ -4,7 +4,7 @@
 var app = require("app");
 var projector;
 var BrowserWindow = require("browser-window");
-
+const main = require('electron').ipcMain;
 
 app.on("ready", function () {
 
@@ -17,8 +17,6 @@ app.on("ready", function () {
 	// Listen for incoming data:
 	process.stdin.on('data', function (data) {
 		console.log('Dialog Spawn Received Command: ' + data);
-		// dialog.showOpenDialog(null, {}, function (paths) {
-		// 	console.log(paths);
-		// });
+
 	});
 });
