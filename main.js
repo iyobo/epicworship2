@@ -17,9 +17,9 @@ app.on("ready", function () {
 	dashboard.on('closed', function () {
 		app.quit();
 	});
-	// setTimeout(function () {
+
 		createPresenter();
-	// }, 3000);
+
 });
 
 
