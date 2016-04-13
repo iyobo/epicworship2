@@ -18,18 +18,16 @@ app.on("ready", function () {
 		app.quit();
 	});
 	// setTimeout(function () {
-		forkOutPresenter();
+		createPresenter();
 	// }, 3000);
 });
 
 
-
-
-
-
-
-
-function forkOutPresenter() {
+/**
+ * Create a presenter and return it's id
+ * @returns {Number}
+ */
+function createPresenter() {
 	var asyncPresenter = require('child_process').spawn(electronBin, ['forks/presenter']);
 
 	//received data from presenter
@@ -47,5 +45,6 @@ function forkOutPresenter() {
 	});
 
 	presenters.push(asyncPresenter)
+	return presenters.length;
 
 }
