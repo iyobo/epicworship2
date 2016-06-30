@@ -1,10 +1,10 @@
 /**
  * Created by iyobo on 2016-04-07.
  */
-var app = require("app");
-var projector;
-var BrowserWindow = require("browser-window");
-const main = require('electron').ipcMain;
+const electron = require('electron')
+const app = electron.app
+const BrowserWindow = electron.BrowserWindow
+
 
 app.on("ready", function () {
 

@@ -1,5 +1,3 @@
-var scp = require('scp2');
-
 
 function transition() {
 }
@@ -21,10 +19,6 @@ window.onload = function () {
             vid.addClass('fadeIn');
             
         });
-
     });
-
-
-
 
 };
