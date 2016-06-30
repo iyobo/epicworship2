@@ -8,18 +8,18 @@ var electronBin = app.getPath('exe') //"./node_modules/.bin/electron"
 
 // Windows
 var dashboard;
-var presenters = [];
+var projectors = [];
 
 
 app.on("ready", function () {
 
     dashboard = new BrowserWindow({width: 600, height: 800});
-    dashboard.loadURL("file://" + __dirname + "/app/screens/dashboard.html");
+    dashboard.loadURL("file://"+process.cwd() + "/app/dashboard/dashboard.html");
     dashboard.on('closed', function () {
         app.quit();
     });
 
-    createPresenter();
+    createProjector();
 });
 
 
@@ -27,24 +27,25 @@ app.on("ready", function () {
  * Create a presenter and return it's id
  * @returns {Number}
  */
-function createPresenter() {
-    var asyncPresenter = require('child_process').spawn(electronBin, ['forks/presenter']);
+function createProjector() {
+    var asyncProjector = require('child_process').spawn(electronBin, ['app/projector/projector']);
+    projectors.push(asyncProjector);
+    var index = projectors.length;
 
     //received data from presenter
-    asyncPresenter.stdout.on('data', (data) => {
-        console.log("from Dialog", JSON.stringify(data.toString()));
+    asyncProjector.stdout.on('data', (data) => {
+        console.log(`Projector-${index}:`, JSON.stringify(data.toString()));
     });
 
     //received eeror from presenter
-    asyncPresenter.stderr.on('data', (data) => {
-        console.log(`dialog error: ${data.toString()}`);
+    asyncProjector.stderr.on('data', (data) => {
+        console.log(`Projector-${index} error: ${data.toString()}`);
     });
 
-    asyncPresenter.on('close', (code) => {
-        console.log(`asyncdialog process exited with code ${code.toString()}.`);
+    asyncProjector.on('close', (code) => {
+        console.log(`Projector-${index}: Process exited with code ${code.toString()}.`);
     });
 
-    presenters.push(asyncPresenter)
-    return presenters.length;
+    return index;
 
 }

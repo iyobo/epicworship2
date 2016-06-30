@@ -9,14 +9,14 @@ const BrowserWindow = electron.BrowserWindow
 app.on("ready", function () {
 
 	projector = new BrowserWindow({width: 600, height: 800});
-	projector.loadURL("file://" + __dirname + "/../../screens/projector.html");
+	projector.loadURL("file://"+process.cwd()+"/app/projector/projector.html");
 
 	// Unpause the stdin stream:
 	process.stdin.resume();
 
 	// Listen for incoming data:
 	process.stdin.on('data', function (data) {
-		console.log('Dialog Spawn Received Command: ' + data);
+		console.log('Projector Received Command: ' + data);
 
 	});
 });
