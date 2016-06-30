@@ -1,2 +1,22 @@
-Main Dashboard
-<input type="file" id="files" name="files[]" multiple />
+<head>
+
+</head>
+<body>
+<h1>Main Dashboard</h1>
+
+<input type="file" id="bg" name="bg" />
+<a href="javascript:openFile()">Go go go</a>
+
+<script>
+    const ipc = require('electron').ipcRenderer
+
+    ipc.on('selected-directory', function (event, path) {
+        document.getElementById('selected-file').innerHTML = `You selected: ${path}`
+    })
+
+    function openFile () {
+        ipc.send('open-file-dialog');
+
+    }
+</script>
+</body>

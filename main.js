@@ -19,7 +19,18 @@ app.on("ready", function () {
         app.quit();
     });
 
-    createProjector();
+    createAsyncProjector(projectors.length+1);
+
+    const ipc = require('electron').ipcMain
+    const dialog = require('electron').dialog
+
+    ipc.on('open-file-dialog', function (event) {
+        dialog.showOpenDialog({
+            properties: ['openFile', 'openDirectory']
+        }, function (files) {
+            if (files) event.sender.send('selected-directory', files)
+        })
+    })
 });
 
 
@@ -27,25 +38,42 @@ app.on("ready", function () {
  * Create a presenter and return it's id
  * @returns {Number}
  */
-function createProjector() {
-    var asyncProjector = require('child_process').spawn(electronBin, ['app/projector/projector']);
-    projectors.push(asyncProjector);
-    var index = projectors.length;
+function createAsyncProjector(id) {
+    var projector = require('child_process').spawn(electronBin, ['app/projector/projector', id]);
+    projectors.push(projector);
 
     //received data from presenter
-    asyncProjector.stdout.on('data', (data) => {
-        console.log(`Projector-${index}:`, JSON.stringify(data.toString()));
+    projector.stdout.on('data', (data) => {
+        console.log(`Projector-${id}:`, JSON.stringify(data.toString()));
     });
 
     //received eeror from presenter
-    asyncProjector.stderr.on('data', (data) => {
-        console.log(`Projector-${index} error: ${data.toString()}`);
+    projector.stderr.on('data', (data) => {
+        console.log(`Projector-${id} error: ${data.toString()}`);
     });
 
-    asyncProjector.on('close', (code) => {
-        console.log(`Projector-${index}: Process exited with code ${code.toString()}.`);
+    projector.on('close', (code) => {
+        console.log(`Projector-${id}: Process exited with code ${code.toString()}.`);
     });
 
-    return index;
+    return projector;
+
+}
+
+/**
+ * We never use this. We don't want projectors getting blocked by anything e.g. file dialogs.
+ * Projectors will act as spawned, seperate servers.
+ * @param id
+ * @returns {electron.BrowserWindow}
+ */
+function createProjector(id) {
+    var projector = new BrowserWindow({x:0, width: 600, height: 800});
+    projectors.push(projector);
+    projector.loadURL("file://"+process.cwd() + "/app/projector/projector.html");
+    projector.on('closed', function () {
+        app.quit();
+    });
+
+    return projector;
 
 }
