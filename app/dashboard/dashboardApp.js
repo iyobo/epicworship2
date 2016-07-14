@@ -3,6 +3,7 @@
  */
 import {Component} from '@angular/core';
 import {bootstrap}    from '@angular/platform-browser-dynamic';
+const ipc = electron.ipcRenderer;
 
 @Component({
 	selector: 'dashboard',
@@ -11,6 +12,14 @@ import {bootstrap}    from '@angular/platform-browser-dynamic';
 export class DashboardApp {
 	constructor() {
 		this.foo = "bar";
+
+		ipc.on('selected-directory', function (event, path) {
+			console.log(`Selected: ${path}`);
+		})
+	}
+
+	openFile() {
+		ipc.send('open-file-dialog');
 	}
 }
 

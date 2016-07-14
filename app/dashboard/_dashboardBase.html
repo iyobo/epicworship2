@@ -1,6 +1,9 @@
 <head>
 	<script type="text/javascript" src="../../node_modules/zone.js/dist/zone.js"></script>
 	<script type="text/javascript" src="../../node_modules/reflect-metadata/Reflect.js"></script>
+	<script>
+		var electron = require('electron');
+	</script>
 	<script src="../../out/dashboard.bundle.js"></script>
 </head>
 <body>
@@ -8,20 +11,5 @@
 
 <dashboard></dashboard>
 
-<input type="file" id="bg" name="bg"/>
-<a href="javascript:openFile()">Go go go</a>
-
-<script>
-	const ipc = require('electron').ipcRenderer
-
-	ipc.on('selected-directory', function (event, path) {
-		document.getElementById('selected-file').innerHTML = `You selected: ${path}`
-	})
-
-	function openFile() {
-		ipc.send('open-file-dialog');
-
-	}
-</script>
 
 </body>

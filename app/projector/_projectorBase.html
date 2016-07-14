@@ -7,21 +7,14 @@
 	<script type="text/javascript" src="../../node_modules/zone.js/dist/zone.js"></script>
 	<script type="text/javascript" src="../../node_modules/reflect-metadata/Reflect.js"></script>
 	<script type="text/javascript" src="../../assets/js/jquery-2.2.0.min.js"></script>
+	<script>
+		var electron = require('electron');
+	</script>
 	<script src="../../out/projector.bundle.js"></script>
 </head>
 
 <body>
-
-<div id="text_layer">
-	<projector></projector>
-</div>
-
-
-<!--<div id="whiteout_layer"></div>-->
-<video id="bgvid" class="video-js vjs-default-skin vjs-big-play-centered bgvideo" width="640" height="480" autoplay
-	   loop>
-	<source id="vidsrc" src="../../assets/bg/videos/video.mp4" type="video/mp4"/>
-</video>
+<projector></projector>
 
 </body>
 
