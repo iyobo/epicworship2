@@ -49,7 +49,9 @@
 	 */
 
 	class Projector{
-
+		constructor(){
+			
+		}
 	}
 
 	module.exports=Projector;
