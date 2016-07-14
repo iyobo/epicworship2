@@ -14,7 +14,7 @@ var projectors = [];
 app.on("ready", function () {
 
     dashboard = new BrowserWindow({width: 600, height: 800});
-    dashboard.loadURL("file://"+process.cwd() + "/app/dashboard/dashboard.html");
+    dashboard.loadURL("file://"+process.cwd() + "/app/dashboard/base/dashboard.html");
     dashboard.on('closed', function () {
         app.quit();
     });

@@ -9,7 +9,7 @@ const BrowserWindow = electron.BrowserWindow
 app.on("ready", function () {
 
 	projector = new BrowserWindow({width: 600, height: 800});
-	projector.loadURL("file://"+process.cwd()+"/app/projector/projector.html");
+	projector.loadURL("file://"+process.cwd()+"/app/projector/base/projector.html");
 
 	// Unpause the stdin stream:
 	process.stdin.resume();
