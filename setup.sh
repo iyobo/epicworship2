@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 npm install webpack -g
 npm install -g electron-prebuilt
 npm install webpack-dev-server -g

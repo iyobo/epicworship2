@@ -1,8 +1,11 @@
 module.exports = {
-    entry: "./assets/js/main.js",
+    entry: {
+        dashboard: "./app/dashboard/dashboard.js",
+        projector: "./app/projector/projector.js"
+    },
     output: {
-        path: "./assets/",
-        filename: "bundle.js"
+        path: "./out/",
+        filename: "[name].bundle.js"
     },
     module: {
         loaders: [

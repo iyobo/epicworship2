@@ -39,7 +39,7 @@ app.on("ready", function () {
  * @returns {Number}
  */
 function createAsyncProjector(id) {
-    var projector = require('child_process').spawn(electronBin, ['app/projector/projector', id]);
+    var projector = require('child_process').spawn(electronBin, ['mainprojector', id]);
     projectors.push(projector);
 
     //received data from presenter

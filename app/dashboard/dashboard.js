@@ -1,8 +1,8 @@
 /**
  * Created by iyobo on 6/30/16.
  */
-class Overlord{
+class Dashboard{
     
 }
 
-module.exports= Overlord
+module.exports= Dashboard
