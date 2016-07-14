@@ -6,7 +6,7 @@ import {bootstrap}    from '@angular/platform-browser-dynamic';
 
 @Component({
 	selector: 'projector',
-	template: '<h1>My Projector {{foo}} My Projector </h1>'
+	templateUrl: './projectorApp.html'
 })
 export class ProjectorApp {
 	constructor() {
