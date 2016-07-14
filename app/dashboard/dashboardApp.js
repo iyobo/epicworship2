@@ -1,10 +1,14 @@
 /**
  * Created by iyobo on 6/30/16.
  */
+import 'zone.js';
+import 'reflect-metadata';
 import { Component } from '@angular/core';
+import { bootstrap }    from '@angular/platform-browser-dynamic';
+
 @Component({
 	selector: 'dashboard',
-	template: '<h1>My First Angular 2 App</h1>'
+	template: '<h1>My First Angular 2 App. Ditto</h1>'
 })
 export class DashboardApp{
     constructor(){
@@ -12,4 +16,4 @@ export class DashboardApp{
 	}
 }
 
-module.exports= DashboardApp
+bootstrap(DashboardApp);

@@ -1,5 +1,5 @@
 <head>
-    <script src="../../out/dashboard.bundle.js"></script>
+    <script src="../../out/dashboardApp.bundle.js"></script>
 </head>
 <body>
 <h1>Main Dashboard</h1>
@@ -21,39 +21,5 @@
 
     }
 </script>
-
-
-<script src="https://code.angularjs.org/2.0.0-alpha.26/angular2.sfx.dev.js"></script>
-
-<script>
-    function AppComponent() {
-        this.todos = [];
-        this.addTodo = function(todo) {
-            this.todos.push(todo.value);
-            todo.value = null;
-            return false;
-        }
-    }
-
-    AppComponent.annotations = [
-        new angular.ComponentAnnotation({
-            selector: 'my-app'
-        }),
-        new angular.ViewAnnotation({
-            template: '<h3>TODO</h3>' +
-            '<ul><li *ng-for="#todo of todos">{{ todo }}</li></ul>' +
-            '<form (submit)="addTodo(todotext)"><input #todotext><button>add #{{todos.length + 1}}</button></form>',
-            directives: [angular.NgFor]
-        })
-    ];
-
-    document.addEventListener('DOMContentLoaded', function() {
-        angular.bootstrap(AppComponent);
-    });
-
-</script>
-
-<my-app></my-app>
-
 
 </body>

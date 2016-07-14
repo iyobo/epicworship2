@@ -1,7 +1,7 @@
 module.exports = {
     entry: {
-        dashboard: "./app/dashboard/dashboard.js",
-        projector: "./app/projector/projector.js"
+        dashboardApp: "./app/dashboard/dashboardApp.js",
+        projectorApp: "./app/projector/projectorApp.js"
     },
     output: {
         path: "./out/",
