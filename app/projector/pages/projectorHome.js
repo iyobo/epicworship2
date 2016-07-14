@@ -5,7 +5,7 @@ import {Component} from '@angular/core';
 import {bootstrap}    from '@angular/platform-browser-dynamic';
 
 @Component({
-	templateUrl: './projectorHome.html'
+	templateUrl: 'pages/projectorHome.html'
 })
 export class ProjectorHome {
 	constructor() {

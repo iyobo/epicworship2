@@ -62,7 +62,7 @@
 
 	var _router = __webpack_require__(328);
 
-	var _routes = __webpack_require__(380);
+	var _dashboard = __webpack_require__(382);
 
 	var _common = __webpack_require__(112);
 
@@ -77,7 +77,7 @@
 	}) || _class);
 
 
-	(0, _platformBrowserDynamic.bootstrap)(DashboardApp, [_routes.appRouterProviders, { provide: _common.LocationStrategy, useClass: _common.HashLocationStrategy }]).catch(function (err) {
+	(0, _platformBrowserDynamic.bootstrap)(DashboardApp, [_dashboard.appRouterProviders, { provide: _common.LocationStrategy, useClass: _common.HashLocationStrategy }]).catch(function (err) {
 		return console.error(err);
 	});
 
@@ -54109,25 +54109,7 @@
 	//# sourceMappingURL=common_router_providers.js.map
 
 /***/ },
-/* 380 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.appRouterProviders = undefined;
-
-	var _router = __webpack_require__(328);
-
-	var _dashboardHome = __webpack_require__(381);
-
-	var routes = [{ path: '', component: _dashboardHome.DashboardHome, name: 'home' }];
-
-	var appRouterProviders = exports.appRouterProviders = [(0, _router.provideRouter)(routes)];
-
-/***/ },
+/* 380 */,
 /* 381 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -54154,7 +54136,7 @@
 	var ipc = electron.ipcRenderer;
 
 	var DashboardHome = exports.DashboardHome = (_dec = (0, _core.Component)({
-		templateUrl: './pages/dashboardHome.html'
+		templateUrl: 'pages/dashboardHome.html'
 	}), _dec(_class = function () {
 		function DashboardHome() {
 			_classCallCheck(this, DashboardHome);
@@ -54179,6 +54161,25 @@
 
 		return DashboardHome;
 	}()) || _class);
+
+/***/ },
+/* 382 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.appRouterProviders = undefined;
+
+	var _router = __webpack_require__(328);
+
+	var _dashboardHome = __webpack_require__(381);
+
+	var routes = [{ path: '', component: _dashboardHome.DashboardHome, name: 'home' }];
+
+	var appRouterProviders = exports.appRouterProviders = [(0, _router.provideRouter)(routes)];
 
 /***/ }
 /******/ ]);

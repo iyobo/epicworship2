@@ -4,7 +4,7 @@
 import {Component} from '@angular/core';
 import {bootstrap}    from '@angular/platform-browser-dynamic';
 import { ROUTER_DIRECTIVES } from '@angular/router';
-import {appRouterProviders} from "./routes";
+import {appRouterProviders} from "./dashboard.routes";
 import { LocationStrategy,
 	HashLocationStrategy } from '@angular/common';
 

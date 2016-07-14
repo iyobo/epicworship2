@@ -6,7 +6,7 @@ import {bootstrap}    from '@angular/platform-browser-dynamic';
 const ipc = electron.ipcRenderer;
 
 @Component({
-	templateUrl: './pages/dashboardHome.html'
+	templateUrl: 'pages/dashboardHome.html'
 })
 export class DashboardHome{
 	constructor() {
