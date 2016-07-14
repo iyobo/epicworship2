@@ -54148,14 +54148,27 @@
 			key: 'ngOnInit',
 			value: function ngOnInit() {
 				console.log('loaded');
-				ipc.on('selected-directory', function (event, path) {
+
+				//ipc callbacks
+				ipc.on('dashhome:chooseBackground', function (event, path) {
 					console.log('Selected: ' + path);
+					//TODO: Usually we want to just add the path to something
+
+					//This time, let's send it to the projector
+					ipc.send("toProjector", 1, {
+						background: path
+					});
 				});
 			}
 		}, {
-			key: 'openFile',
-			value: function openFile() {
-				ipc.send('chooseFile');
+			key: 'chooseBackground',
+			value: function chooseBackground() {
+
+				ipc.send('chooseFile', {
+					returnChannel: "dashhome:chooseBackground",
+					title: "Choose a background...",
+					properties: ['openFile']
+				});
 			}
 		}]);
 

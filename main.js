@@ -9,7 +9,7 @@ var electronBin = app.getPath('exe') //"./node_modules/.bin/electron"
 
 // Windows
 var dashboard;
-var projectors = [];
+var projectors = {};
 
 
 app.on("ready", function () {
@@ -20,65 +20,69 @@ app.on("ready", function () {
         app.quit();
     });
 
-    setupFileChooser();
-    createAsyncProjector(projectors.length+1);
+    setupIPCActions();
+    createAsyncProjector("auditorium");
+    createAsyncProjector("overflow");
 
 
 
 });
 
 
-function setupFileChooser(){
+function setupIPCActions(){
 
-    ipc.on('chooseFile', function (event) {
-        dialog.showOpenDialog({
-            properties: ['openFile', 'openDirectory']
-        }, function (files) {
-            if (files) event.sender.send('selected-directory', files)
+	/**
+     * Opens file picker
+     * @args:   returnChannel: channel to return files to after selection
+     *          multi: whether or not to allow multiple selection (default:false)
+     */
+    ipc.on('chooseFile', function (event,args) {
+        dialog.showOpenDialog(args, function (files) {
+            if (files) {
+                event.sender.send(args.returnChannel, files)
+
+                //or if sync
+                event.returnValue = files;
+            }
         })
+    })
+
+	/**
+	 * Sends payload to projector of given id
+     */
+    ipc.on('toProjector', function (event,name, payload) {
+        projectors[name].send(payload);
     })
 }
 
 
 /**
- * Create a presenter and return it's id
- * @returns {Number}
+ * Create an Asynchronous presenter and returns the created process.
+ * @returns {ChildProcess}
  */
-function createAsyncProjector(id) {
-    var projector = require('child_process').spawn(electronBin, ['mainprojector', id]);
-    projectors.push(projector);
+function createAsyncProjector(name) {
+    var projector = require('child_process').spawn(electronBin, ['mainprojector', name]);
+    projectors[name]=projector;
 
     //received data from presenter
     projector.stdout.on('data', (data) => {
-        console.log(`Projector-${id}:`, JSON.stringify(data.toString()));
+        console.log(`Projector-${name} received:`, JSON.stringify(data.toString()));
     });
 
-    //received eeror from presenter
+    //received error from presenter
     projector.stderr.on('data', (data) => {
-        console.log(`Projector-${id} error: ${data.toString()}`);
+        console.log(`Projector-${name} got an error: ${data.toString()}`);
     });
 
     projector.on('close', (code) => {
-        console.log(`Projector-${id}: Process exited with code ${code.toString()}.`);
+        console.log(`Projector-${name} exited with code ${code.toString()}.`);
+
+        delete projectors[name];
+        if(Object.keys(projectors).length === 0)
+            app.quit();
     });
 
-    return projector;
-
-}
-
-/**
- * We never use this. We don't want projectors getting blocked by anything e.g. file dialogs.
- * Projectors will act as spawned, seperate servers.
- * @param id
- * @returns {electron.BrowserWindow}
- */
-function createProjector(id) {
-    var projector = new BrowserWindow({x:0, width: 600, height: 800});
-    projectors.push(projector);
-    projector.loadURL("file://"+process.cwd() + "/app/projector/projector.html");
-    projector.on('closed', function () {
-        app.quit();
-    });
+    console.log("Launched Projector-"+name);
 
     return projector;
 

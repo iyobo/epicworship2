@@ -8,19 +8,32 @@ const ipc = electron.ipcRenderer;
 @Component({
 	templateUrl: 'pages/dashboardHome.html'
 })
-export class DashboardHome{
+export class DashboardHome {
 	constructor() {
 		this.foo = "bar";
 	}
 
-	ngOnInit(){
-		console.log('loaded')
-		ipc.on('selected-directory', function (event, path) {
+	ngOnInit() {
+		console.log('loaded');
+
+		//ipc callbacks
+		ipc.on('dashhome:chooseBackground', function (event, path) {
 			console.log(`Selected: ${path}`);
+			//TODO: Usually we want to just add the path to something
+
+			//This time, let's send it to the projector
+			ipc.send("toProjector",1,{
+				background: path
+			})
 		})
 	}
 
-	openFile() {
-		ipc.send('chooseFile');
+	chooseBackground() {
+
+		ipc.send('chooseFile', {
+			returnChannel: "dashhome:chooseBackground",
+			title: "Choose a background...",
+			properties:['openFile']
+		});
 	}
 }
