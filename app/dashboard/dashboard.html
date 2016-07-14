@@ -1,25 +1,27 @@
 <head>
-    <script src="../../out/dashboardApp.bundle.js"></script>
+	<script type="text/javascript" src="../../node_modules/zone.js/dist/zone.js"></script>
+	<script type="text/javascript" src="../../node_modules/reflect-metadata/Reflect.js"></script>
+	<script src="../../out/dashboardApp.bundle.js"></script>
 </head>
 <body>
 <h1>Main Dashboard</h1>
 
 <dashboard></dashboard>
 
-<input type="file" id="bg" name="bg" />
+<input type="file" id="bg" name="bg"/>
 <a href="javascript:openFile()">Go go go</a>
 
 <script>
-    const ipc = require('electron').ipcRenderer
+	const ipc = require('electron').ipcRenderer
 
-    ipc.on('selected-directory', function (event, path) {
-        document.getElementById('selected-file').innerHTML = `You selected: ${path}`
-    })
+	ipc.on('selected-directory', function (event, path) {
+		document.getElementById('selected-file').innerHTML = `You selected: ${path}`
+	})
 
-    function openFile () {
-        ipc.send('open-file-dialog');
+	function openFile() {
+		ipc.send('open-file-dialog');
 
-    }
+	}
 </script>
 
 </body>

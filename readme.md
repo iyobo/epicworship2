@@ -9,3 +9,4 @@ EpicWorship 2
 
 *Development/ Hot-compile*
 - run `. dev.sh` to launch webpack on watch mode so you don't have to actively compile everytime you make a change.
+- You can use `command + r` to refresh a window
