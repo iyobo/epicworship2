@@ -44,17 +44,19 @@
 /* 0 */
 /***/ function(module, exports) {
 
+	"use strict";
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 	/**
 	 * Created by iyobo on 2016-04-07.
 	 */
 
-	class Projector{
-		constructor(){
-			
-		}
-	}
+	var Projector = function Projector() {
+		_classCallCheck(this, Projector);
+	};
 
-	module.exports=Projector;
+	module.exports = Projector;
 	// Test logic
 	// window.onload = function () {
 	// 	var vid = $("#bgvid");
@@ -76,7 +78,6 @@
 	// 	});
 	//
 	// };
-
 
 /***/ }
 /******/ ]);
