@@ -68,7 +68,7 @@
 
 	var DashboardApp = exports.DashboardApp = (_dec = (0, _core.Component)({
 		selector: 'dashboard',
-		template: '<h1>My First Angular 2 App. Ditto</h1>'
+		template: '<h1>My First Angular 2 App. {{foo}}</h1>'
 	}), _dec(_class = function DashboardApp() {
 		_classCallCheck(this, DashboardApp);
 
