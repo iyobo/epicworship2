@@ -2,6 +2,7 @@ const electron = require('electron')
 const app = electron.app
 const dialog = electron.dialog
 const BrowserWindow = electron.BrowserWindow
+const ipc = require('electron').ipcMain
 
 //Electron
 var electronBin = app.getPath('exe') //"./node_modules/.bin/electron"
@@ -19,19 +20,24 @@ app.on("ready", function () {
         app.quit();
     });
 
+    setupFileChooser();
     createAsyncProjector(projectors.length+1);
 
-    const ipc = require('electron').ipcMain
-    const dialog = require('electron').dialog
 
-    ipc.on('open-file-dialog', function (event) {
+
+});
+
+
+function setupFileChooser(){
+
+    ipc.on('chooseFile', function (event) {
         dialog.showOpenDialog({
             properties: ['openFile', 'openDirectory']
         }, function (files) {
             if (files) event.sender.send('selected-directory', files)
         })
     })
-});
+}
 
 
 /**

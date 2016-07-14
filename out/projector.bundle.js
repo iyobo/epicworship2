@@ -63,8 +63,7 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var ProjectorApp = exports.ProjectorApp = (_dec = (0, _core.Component)({
-		selector: 'projector',
-		templateUrl: './projectorApp.html'
+		selector: 'projector'
 	}), _dec(_class = function ProjectorApp() {
 		_classCallCheck(this, ProjectorApp);
 

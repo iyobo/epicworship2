@@ -5,12 +5,12 @@ import {Component} from '@angular/core';
 import {bootstrap}    from '@angular/platform-browser-dynamic';
 
 @Component({
-	selector: 'projector',
+	templateUrl: './projectorHome.html'
 })
-export class ProjectorApp {
+export class ProjectorHome {
 	constructor() {
 		this.foo = "bar";
 	}
 }
 
-bootstrap(ProjectorApp);
+bootstrap(ProjectorHome);
