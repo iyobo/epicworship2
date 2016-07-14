@@ -22,7 +22,7 @@ export class DashboardHome {
 			//TODO: Usually we want to just add the path to something
 
 			//This time, let's send it to the projector
-			ipc.send("toProjector",1,{
+			ipc.send("toProjector","main",{
 				background: path
 			})
 		})

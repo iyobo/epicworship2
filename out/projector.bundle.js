@@ -62,7 +62,7 @@
 
 	var _router = __webpack_require__(328);
 
-	var _projector = __webpack_require__(383);
+	var _projector = __webpack_require__(382);
 
 	var _common = __webpack_require__(112);
 
@@ -54113,8 +54113,7 @@
 /***/ },
 /* 380 */,
 /* 381 */,
-/* 382 */,
-/* 383 */
+/* 382 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54126,14 +54125,14 @@
 
 	var _router = __webpack_require__(328);
 
-	var _projectorHome = __webpack_require__(384);
+	var _projectorHome = __webpack_require__(383);
 
 	var routes = [{ path: '', component: _projectorHome.ProjectorHome, name: 'home' }];
 
 	var appRouterProviders = exports.appRouterProviders = [(0, _router.provideRouter)(routes)];
 
 /***/ },
-/* 384 */
+/* 383 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

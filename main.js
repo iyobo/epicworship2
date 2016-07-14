@@ -17,14 +17,17 @@ app.on("ready", function () {
     dashboard = new BrowserWindow({width: 600, height: 800});
     dashboard.loadURL("file://"+process.cwd() + "/app/dashboard/_dashboardBase.html");
     dashboard.on('closed', function () {
+        //on dashboard closing, close all projectors
+        for(var name in projectors){
+            projectors[name].kill();
+            delete projectors[name];
+        }
         app.quit();
     });
 
     setupIPCActions();
-    createAsyncProjector("auditorium");
-    createAsyncProjector("overflow");
-
-
+    createAsyncProjector("main");
+    // createAsyncProjector("overflow");
 
 });
 
@@ -48,10 +51,22 @@ function setupIPCActions(){
     })
 
 	/**
-	 * Sends payload to projector of given id
+	 * Sends payload to projector of given name
      */
-    ipc.on('toProjector', function (event,name, payload) {
-        projectors[name].send(payload);
+    ipc.on('toProjector', function (...args) {
+
+		if(args.length==2){
+			//push to all projectors
+			for(var name in projectors){
+				projectors[name].stdin.write(JSON.stringify(args[1]));
+			}
+		}
+		else if(args.length==3){
+			//push to one projector
+			projectors[args[1]].stdin.write(JSON.stringify(args[2]));
+		}
+
+
     })
 }
 
@@ -66,7 +81,7 @@ function createAsyncProjector(name) {
 
     //received data from presenter
     projector.stdout.on('data', (data) => {
-        console.log(`Projector-${name} received:`, JSON.stringify(data.toString()));
+        console.log(`Projector-${name} says:`, JSON.stringify(data.toString()));
     });
 
     //received error from presenter

@@ -62,7 +62,7 @@
 
 	var _router = __webpack_require__(328);
 
-	var _dashboard = __webpack_require__(382);
+	var _dashboard = __webpack_require__(380);
 
 	var _common = __webpack_require__(112);
 
@@ -54109,7 +54109,25 @@
 	//# sourceMappingURL=common_router_providers.js.map
 
 /***/ },
-/* 380 */,
+/* 380 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.appRouterProviders = undefined;
+
+	var _router = __webpack_require__(328);
+
+	var _dashboardHome = __webpack_require__(381);
+
+	var routes = [{ path: '', component: _dashboardHome.DashboardHome, name: 'home' }];
+
+	var appRouterProviders = exports.appRouterProviders = [(0, _router.provideRouter)(routes)];
+
+/***/ },
 /* 381 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -54155,7 +54173,7 @@
 					//TODO: Usually we want to just add the path to something
 
 					//This time, let's send it to the projector
-					ipc.send("toProjector", 1, {
+					ipc.send("toProjector", "main", {
 						background: path
 					});
 				});
@@ -54174,25 +54192,6 @@
 
 		return DashboardHome;
 	}()) || _class);
-
-/***/ },
-/* 382 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.appRouterProviders = undefined;
-
-	var _router = __webpack_require__(328);
-
-	var _dashboardHome = __webpack_require__(381);
-
-	var routes = [{ path: '', component: _dashboardHome.DashboardHome, name: 'home' }];
-
-	var appRouterProviders = exports.appRouterProviders = [(0, _router.provideRouter)(routes)];
 
 /***/ }
 /******/ ]);
