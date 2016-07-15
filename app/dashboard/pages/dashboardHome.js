@@ -3,6 +3,7 @@
  */
 import {Component} from '@angular/core';
 const FadeOutInBackground = require("../../shared/payload/actions/bg/FadeOutInBackground")
+const ShowTextAction = require("../../shared/payload/actions/node/ShowTextAction")
 
 
 const ipc = electron.ipcRenderer;
@@ -25,7 +26,12 @@ export class DashboardHome {
 
 			//Let's send it to the projector
 			ipc.send("toProjector","main",[
-				new FadeOutInBackground(path, 2000)
+				new FadeOutInBackground(path, 2000),
+				ShowTextAction.build({
+					text: "Why do you run?",
+					_duration: 800,
+					_nextDelay: 300
+				})
 			],{
 				background: path,
 				textnodes:[

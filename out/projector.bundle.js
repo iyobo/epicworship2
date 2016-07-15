@@ -103,7 +103,7 @@
 						setTimeout(function () {
 							action.perform(_this2);
 						}, currentTicks);
-						currentTicks += action.durationBeforeNext;
+						currentTicks += action.nextDelay;
 					});
 				});
 			}
@@ -49351,7 +49351,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	var _set = function set(object, property, value, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent !== null) { set(parent, property, value, receiver); } } else if ("value" in desc && desc.writable) { desc.value = value; } else { var setter = desc.set; if (setter !== undefined) { setter.call(receiver, value); } } return value; };
 
 	var _PayloadAction2 = __webpack_require__(383);
 
@@ -49364,6 +49364,8 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
 
+	var number = Number; //Annoying syntax highlighter fix
+
 	module.exports = function (_PayloadAction) {
 		_inherits(FadeOutInBackground, _PayloadAction);
 
@@ -49375,6 +49377,7 @@
 			_this._group = "bg";
 			_this._type = "FadeOutInBackground";
 
+			_this.nextDelay = duration / 2;
 			_this.path = path;
 			return _this;
 		}
@@ -49385,20 +49388,24 @@
 				console.log("changing Background...");
 			}
 		}, {
-			key: "durationBeforeNext",
+			key: "nextDelay",
 
 
 			/**
 	   * We want other actions to continue processing halfway through this background-changing action
 	   * @returns {number}
 	   */
+
 			get: function get() {
-				return _get(Object.getPrototypeOf(FadeOutInBackground.prototype), "durationBeforeNext", this) / 2;
+				return this.duration / 2;
+			},
+			set: function set(value) {
+				return _set(Object.getPrototypeOf(FadeOutInBackground.prototype), "nextDelay", value, this);
 			}
 		}], [{
 			key: "build",
 			value: function build(data) {
-				return new FadeOutInBackground(data.path, data.duration);
+				return new FadeOutInBackground(data.path || "", data._duration || 1000);
 			}
 		}]);
 
@@ -49432,11 +49439,13 @@
 		function PayloadAction(duration) {
 			_classCallCheck(this, PayloadAction);
 
-			this.duration = 1000;
+			this._duration = 1000;
+			this._nextDelay = 1000;
 			this._group = "notset";
 			this._type = "notset";
 
-			this.duration = duration;
+			this._duration = duration;
+			this._nextDelay = duration;
 		}
 
 		_createClass(PayloadAction, [{
@@ -49450,16 +49459,20 @@
 	   */
 			value: function perform(projector) {}
 		}, {
-			key: "durationBeforeNext",
-
-
-			/**
-	   * How long to wait before processing other actions.
-	   * Default is duration.
-	   * @returns {Number}
-	   */
+			key: "duration",
 			get: function get() {
-				return this.duration;
+				return this._duration;
+			},
+			set: function set(value) {
+				this._duration = value;
+			}
+		}, {
+			key: "nextDelay",
+			get: function get() {
+				return this._nextDelay;
+			},
+			set: function set(value) {
+				this._nextDelay = value;
 			}
 		}], [{
 			key: "deserialize",
@@ -49481,7 +49494,9 @@
 		"./PayloadAction": 383,
 		"./PayloadAction.js": 383,
 		"./bg/FadeOutInBackground": 382,
-		"./bg/FadeOutInBackground.js": 382
+		"./bg/FadeOutInBackground.js": 382,
+		"./node/ShowTextAction": 386,
+		"./node/ShowTextAction.js": 386
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -49496,6 +49511,60 @@
 	module.exports = webpackContext;
 	webpackContext.id = 384;
 
+
+/***/ },
+/* 385 */,
+/* 386 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _PayloadAction2 = __webpack_require__(383);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by iyobo on 2016-07-15.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+	module.exports = function (_PayloadAction) {
+		_inherits(ShowTextAction, _PayloadAction);
+
+		function ShowTextAction(text, duration) {
+			_classCallCheck(this, ShowTextAction);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ShowTextAction).call(this, duration));
+
+			_this._group = "node";
+			_this._type = "ShowTextAction";
+
+			_this.text = text;
+			return _this;
+		}
+
+		_createClass(ShowTextAction, [{
+			key: "perform",
+			value: function perform(ctx) {
+				console.log("Showing Text:", this.text);
+			}
+		}], [{
+			key: "build",
+			value: function build(data) {
+				var action = new ShowTextAction(data.text || "", data._duration || 500);
+				action.nextDelay = data._nextDelay || data._duration || 500;
+				return action;
+			}
+		}]);
+
+		return ShowTextAction;
+	}(_PayloadAction2.PayloadAction);
+
+	// module.exports=FadeOutInBackground
 
 /***/ }
 /******/ ]);

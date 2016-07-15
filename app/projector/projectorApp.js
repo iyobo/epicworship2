@@ -33,7 +33,7 @@ export class ProjectorApp {
 				setTimeout(()=>{
 					action.perform(this)
 				},currentTicks);
-				currentTicks+=action.durationBeforeNext
+				currentTicks+=action.nextDelay
 			})
 
 		})
