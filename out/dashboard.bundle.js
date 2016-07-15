@@ -54174,7 +54174,24 @@
 
 					//This time, let's send it to the projector
 					ipc.send("toProjector", "main", {
-						background: path
+						background: path,
+						textnodes: [{
+							position: [0, 0],
+							cssStyle: "",
+							text: "Yeah! " + new Date(),
+							animations: {
+								entry: "fadein",
+								exit: "fadeout"
+							}
+						}, {
+							position: [0, 10],
+							cssStyle: "",
+							text: "Okay! " + new Date(),
+							animations: {
+								entry: "fadein",
+								exit: "fadeout"
+							}
+						}]
 					});
 				});
 			}

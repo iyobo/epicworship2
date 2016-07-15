@@ -3,8 +3,8 @@
  */
 const electron = require('electron')
 const app = electron.app
-const BrowserWindow = electron.BrowserWindow
-
+const BrowserWindow = electron.BrowserWindow;
+const ipc = electron.ipcMain;
 
 app.on("ready", function () {
 
@@ -17,6 +17,8 @@ app.on("ready", function () {
 	// Listen for incoming data:
 	process.stdin.on('data', function (data) {
 		console.log('Projector Received Command: ' + data);
+
+		projector.webContents.send("projhome:payload",JSON.parse(data));
 
 	});
 });

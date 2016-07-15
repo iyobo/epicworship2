@@ -3,23 +3,33 @@
  */
 import {Component} from '@angular/core';
 import {bootstrap}    from '@angular/platform-browser-dynamic';
-import { ROUTER_DIRECTIVES } from '@angular/router';
-import {appRouterProviders} from "./projector.routes";
-import { LocationStrategy,
-	HashLocationStrategy } from '@angular/common';
+const ipc = electron.ipcRenderer;
 
 @Component({
 	selector: 'projector',
-	template: '<router-outlet></router-outlet>',
-	directives: [ROUTER_DIRECTIVES],
+	templateUrl: './projectorApp.html',
 })
 export class ProjectorApp {
-	constructor() {
-		this.foo = "bar";
+
+	ngOnInit() {
+		var vid = $("#bgvid");
+
+		//ipc callbacks
+		ipc.on('projhome:payload', function (event, payload) {
+			$('#bgvid source').attr('src', payload.background);
+
+			vid.addClass('animated fadeOut');
+			vid.one('animationend', function () {
+
+				vid[0].load();
+				// txt.text('We Worship you Hallelujah Hallejujah');
+				vid.removeClass('fadeOut');
+				vid.addClass('fadeIn');
+
+			});
+		})
 	}
 }
 
 bootstrap(ProjectorApp, [
-	appRouterProviders,
-	{ provide: LocationStrategy, useClass: HashLocationStrategy }
 ]).catch(err => console.error(err));
