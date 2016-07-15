@@ -61,7 +61,7 @@ function setupIPCActions(){
 				projectors[name].stdin.write(JSON.stringify(args[1]));
 			}
 		}
-		else if(args.length==3){
+		else if(args.length>2){
 			//push to one projector
 			projectors[args[1]].stdin.write(JSON.stringify(args[2]));
 		}

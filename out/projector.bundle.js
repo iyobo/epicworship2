@@ -62,9 +62,12 @@
 
 	var _platformBrowserDynamic = __webpack_require__(111);
 
+	var _PayloadAction = __webpack_require__(383);
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var ipc = electron.ipcRenderer;
+	var vid = $("#bgvid");
 
 	var ProjectorApp = exports.ProjectorApp = (_dec = (0, _core.Component)({
 		selector: 'projector',
@@ -77,20 +80,47 @@
 		_createClass(ProjectorApp, [{
 			key: 'ngOnInit',
 			value: function ngOnInit() {
-				var vid = $("#bgvid");
+				var _this = this;
 
-				//ipc callbacks
-				ipc.on('projhome:payload', function (event, payload) {
-					$('#bgvid source').attr('src', payload.background);
+				this.currentNodes = [];
 
-					vid.addClass('animated fadeOut');
-					vid.one('animationend', function () {
-
-						vid[0].load();
-						// txt.text('We Worship you Hallelujah Hallejujah');
-						vid.removeClass('fadeOut');
-						vid.addClass('fadeIn');
+				//main process says we should do something
+				ipc.on('payload', function (event, payload) {
+					//TODO: Cleanup current scene by running through all current nodes and executing their exit methods
+					_this.currentNodes.forEach(function (node) {
+						node.leave(this);
 					});
+
+					var currentTicks = 0;
+					payload.forEach(function (item) {
+						var _this2 = this;
+
+						//TODO: deserialize action
+						console.log("raw:", item);
+						var action = _PayloadAction.PayloadAction.deserialize(item);
+						console.log("Action:", action);
+
+						setTimeout(function () {
+							action.perform(_this2);
+						}, currentTicks);
+						currentTicks += action.durationBeforeNext;
+					});
+				});
+			}
+		}, {
+			key: 'changeBackground',
+			value: function changeBackground(payload) {
+				//Don't bother changing background if it's the same
+
+				$('#bgvid source').attr('src', payload.background);
+
+				vid.addClass('animated fadeOut');
+				vid.one('animationend', function () {
+
+					vid[0].load();
+					// txt.text('We Worship you Hallelujah Hallejujah');
+					vid.removeClass('fadeOut');
+					vid.addClass('fadeIn');
 				});
 			}
 		}]);
@@ -49258,6 +49288,214 @@
 	}(compiler_1.XHR));
 	exports.XHRImpl = XHRImpl;
 	//# sourceMappingURL=xhr_impl.js.map
+
+/***/ },
+/* 328 */,
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */,
+/* 336 */,
+/* 337 */,
+/* 338 */,
+/* 339 */,
+/* 340 */,
+/* 341 */,
+/* 342 */,
+/* 343 */,
+/* 344 */,
+/* 345 */,
+/* 346 */,
+/* 347 */,
+/* 348 */,
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */,
+/* 362 */,
+/* 363 */,
+/* 364 */,
+/* 365 */,
+/* 366 */,
+/* 367 */,
+/* 368 */,
+/* 369 */,
+/* 370 */,
+/* 371 */,
+/* 372 */,
+/* 373 */,
+/* 374 */,
+/* 375 */,
+/* 376 */,
+/* 377 */,
+/* 378 */,
+/* 379 */,
+/* 380 */,
+/* 381 */,
+/* 382 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _PayloadAction2 = __webpack_require__(383);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by iyobo on 2016-07-15.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+	module.exports = function (_PayloadAction) {
+		_inherits(FadeOutInBackground, _PayloadAction);
+
+		function FadeOutInBackground(path, duration) {
+			_classCallCheck(this, FadeOutInBackground);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FadeOutInBackground).call(this, duration));
+
+			_this._group = "bg";
+			_this._type = "FadeOutInBackground";
+
+			_this.path = path;
+			return _this;
+		}
+
+		_createClass(FadeOutInBackground, [{
+			key: "perform",
+			value: function perform(ctx) {
+				console.log("changing Background...");
+			}
+		}, {
+			key: "durationBeforeNext",
+
+
+			/**
+	   * We want other actions to continue processing halfway through this background-changing action
+	   * @returns {number}
+	   */
+			get: function get() {
+				return _get(Object.getPrototypeOf(FadeOutInBackground.prototype), "durationBeforeNext", this) / 2;
+			}
+		}], [{
+			key: "build",
+			value: function build(data) {
+				return new FadeOutInBackground(data.path, data.duration);
+			}
+		}]);
+
+		return FadeOutInBackground;
+	}(_PayloadAction2.PayloadAction);
+
+	// module.exports=FadeOutInBackground
+
+/***/ },
+/* 383 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/**
+	 * Created by iyobo on 2016-07-15.
+	 */
+	/**
+	 * Payload actions can either create nodes or do specific tasks...all of which should be done within the perform object.
+	 */
+
+	var PayloadAction = exports.PayloadAction = function () {
+		function PayloadAction(duration) {
+			_classCallCheck(this, PayloadAction);
+
+			this.duration = 1000;
+			this._group = "notset";
+			this._type = "notset";
+
+			this.duration = duration;
+		}
+
+		_createClass(PayloadAction, [{
+			key: "perform",
+
+
+			/**
+	   * Use this, if applicable, to perform this action. Takes in the projector context
+	   * i.e. animations, creation of nodes, jquery modifications, etc.
+	   * @param args
+	   */
+			value: function perform(projector) {}
+		}, {
+			key: "durationBeforeNext",
+
+
+			/**
+	   * How long to wait before processing other actions.
+	   * Default is duration.
+	   * @returns {Number}
+	   */
+			get: function get() {
+				return this.duration;
+			}
+		}], [{
+			key: "deserialize",
+			value: function deserialize(data) {
+				return __webpack_require__(384)("./" + data._group + "/" + data._type).build(data);
+			}
+		}]);
+
+		return PayloadAction;
+	}();
+
+	Reflect.defineMetadata("design:paramtypes", [Number], PayloadAction);
+
+/***/ },
+/* 384 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var map = {
+		"./PayloadAction": 383,
+		"./PayloadAction.js": 383,
+		"./bg/FadeOutInBackground": 382,
+		"./bg/FadeOutInBackground.js": 382
+	};
+	function webpackContext(req) {
+		return __webpack_require__(webpackContextResolve(req));
+	};
+	function webpackContextResolve(req) {
+		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
+	};
+	webpackContext.keys = function webpackContextKeys() {
+		return Object.keys(map);
+	};
+	webpackContext.resolve = webpackContextResolve;
+	module.exports = webpackContext;
+	webpackContext.id = 384;
+
 
 /***/ }
 /******/ ]);

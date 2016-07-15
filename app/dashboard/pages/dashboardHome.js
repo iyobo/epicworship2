@@ -2,7 +2,9 @@
  * Created by iyobo on 6/30/16.
  */
 import {Component} from '@angular/core';
-import {bootstrap}    from '@angular/platform-browser-dynamic';
+const FadeOutInBackground = require("../../shared/payload/actions/bg/FadeOutInBackground")
+
+
 const ipc = electron.ipcRenderer;
 
 @Component({
@@ -21,23 +23,27 @@ export class DashboardHome {
 			console.log(`Selected: ${path}`);
 			//TODO: Usually we want to just add the path to something
 
-			//This time, let's send it to the projector
-			ipc.send("toProjector","main",{
+			//Let's send it to the projector
+			ipc.send("toProjector","main",[
+				new FadeOutInBackground(path, 2000)
+			],{
 				background: path,
 				textnodes:[
 					{
-						position: [0,0],
-						cssStyle: "",
-						text: "Yeah! "+new Date(),
+						type: "text",
+						position: [0,0,1],
+						cssStyle: "font-size: 30px;",
+						text: "Body Text Hallo \n Hallo "+new Date(),
 						animations:{
 							entry: "fadein",
 							exit: "fadeout"
 						}
 					},
 					{
-						position: [0,10],
-						cssStyle: "",
-						text: "Okay! "+new Date(),
+						type: "text",
+						position: [0,10,1],
+						cssStyle: "font-size: 14px;",
+						text: "title! "+new Date(),
 						animations:{
 							entry: "fadein",
 							exit: "fadeout"

@@ -18,7 +18,7 @@ app.on("ready", function () {
 	process.stdin.on('data', function (data) {
 		console.log('Projector Received Command: ' + data);
 
-		projector.webContents.send("projhome:payload",JSON.parse(data));
+		projector.webContents.send("payload",JSON.parse(data));
 
 	});
 });

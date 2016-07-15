@@ -21,7 +21,7 @@ video.bgvideo {
     background-size: cover; 
 }
 
-#text_layer{
+#canvas{
   color: White;
   
   /*font-size: 80px;*/

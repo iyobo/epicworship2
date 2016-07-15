@@ -54147,9 +54147,9 @@
 
 	var _core = __webpack_require__(1);
 
-	var _platformBrowserDynamic = __webpack_require__(111);
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var FadeOutInBackground = __webpack_require__(382);
 
 	var ipc = electron.ipcRenderer;
 
@@ -54172,21 +54172,23 @@
 					console.log('Selected: ' + path);
 					//TODO: Usually we want to just add the path to something
 
-					//This time, let's send it to the projector
-					ipc.send("toProjector", "main", {
+					//Let's send it to the projector
+					ipc.send("toProjector", "main", [new FadeOutInBackground(path, 2000)], {
 						background: path,
 						textnodes: [{
-							position: [0, 0],
-							cssStyle: "",
-							text: "Yeah! " + new Date(),
+							type: "text",
+							position: [0, 0, 1],
+							cssStyle: "font-size: 30px;",
+							text: "Body Text Hallo \n Hallo " + new Date(),
 							animations: {
 								entry: "fadein",
 								exit: "fadeout"
 							}
 						}, {
-							position: [0, 10],
-							cssStyle: "",
-							text: "Okay! " + new Date(),
+							type: "text",
+							position: [0, 10, 1],
+							cssStyle: "font-size: 14px;",
+							text: "title! " + new Date(),
 							animations: {
 								entry: "fadein",
 								exit: "fadeout"
@@ -54209,6 +54211,160 @@
 
 		return DashboardHome;
 	}()) || _class);
+
+/***/ },
+/* 382 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _PayloadAction2 = __webpack_require__(383);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by iyobo on 2016-07-15.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+	module.exports = function (_PayloadAction) {
+		_inherits(FadeOutInBackground, _PayloadAction);
+
+		function FadeOutInBackground(path, duration) {
+			_classCallCheck(this, FadeOutInBackground);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FadeOutInBackground).call(this, duration));
+
+			_this._group = "bg";
+			_this._type = "FadeOutInBackground";
+
+			_this.path = path;
+			return _this;
+		}
+
+		_createClass(FadeOutInBackground, [{
+			key: "perform",
+			value: function perform(ctx) {
+				console.log("changing Background...");
+			}
+		}, {
+			key: "durationBeforeNext",
+
+
+			/**
+	   * We want other actions to continue processing halfway through this background-changing action
+	   * @returns {number}
+	   */
+			get: function get() {
+				return _get(Object.getPrototypeOf(FadeOutInBackground.prototype), "durationBeforeNext", this) / 2;
+			}
+		}], [{
+			key: "build",
+			value: function build(data) {
+				return new FadeOutInBackground(data.path, data.duration);
+			}
+		}]);
+
+		return FadeOutInBackground;
+	}(_PayloadAction2.PayloadAction);
+
+	// module.exports=FadeOutInBackground
+
+/***/ },
+/* 383 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/**
+	 * Created by iyobo on 2016-07-15.
+	 */
+	/**
+	 * Payload actions can either create nodes or do specific tasks...all of which should be done within the perform object.
+	 */
+
+	var PayloadAction = exports.PayloadAction = function () {
+		function PayloadAction(duration) {
+			_classCallCheck(this, PayloadAction);
+
+			this.duration = 1000;
+			this._group = "notset";
+			this._type = "notset";
+
+			this.duration = duration;
+		}
+
+		_createClass(PayloadAction, [{
+			key: "perform",
+
+
+			/**
+	   * Use this, if applicable, to perform this action. Takes in the projector context
+	   * i.e. animations, creation of nodes, jquery modifications, etc.
+	   * @param args
+	   */
+			value: function perform(projector) {}
+		}, {
+			key: "durationBeforeNext",
+
+
+			/**
+	   * How long to wait before processing other actions.
+	   * Default is duration.
+	   * @returns {Number}
+	   */
+			get: function get() {
+				return this.duration;
+			}
+		}], [{
+			key: "deserialize",
+			value: function deserialize(data) {
+				return __webpack_require__(384)("./" + data._group + "/" + data._type).build(data);
+			}
+		}]);
+
+		return PayloadAction;
+	}();
+
+	Reflect.defineMetadata("design:paramtypes", [Number], PayloadAction);
+
+/***/ },
+/* 384 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var map = {
+		"./PayloadAction": 383,
+		"./PayloadAction.js": 383,
+		"./bg/FadeOutInBackground": 382,
+		"./bg/FadeOutInBackground.js": 382
+	};
+	function webpackContext(req) {
+		return __webpack_require__(webpackContextResolve(req));
+	};
+	function webpackContextResolve(req) {
+		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
+	};
+	webpackContext.keys = function webpackContextKeys() {
+		return Object.keys(map);
+	};
+	webpackContext.resolve = webpackContextResolve;
+	module.exports = webpackContext;
+	webpackContext.id = 384;
+
 
 /***/ }
 /******/ ]);
