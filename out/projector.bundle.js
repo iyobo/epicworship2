@@ -62,7 +62,7 @@
 
 	var _platformBrowserDynamic = __webpack_require__(111);
 
-	var _PayloadAction = __webpack_require__(383);
+	var _PayloadAction = __webpack_require__(385);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -49353,7 +49353,7 @@
 
 	var _set = function set(object, property, value, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent !== null) { set(parent, property, value, receiver); } } else if ("value" in desc && desc.writable) { desc.value = value; } else { var setter = desc.set; if (setter !== undefined) { setter.call(receiver, value); } } return value; };
 
-	var _PayloadAction2 = __webpack_require__(383);
+	var _PayloadAction2 = __webpack_require__(385);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -49405,7 +49405,7 @@
 		}], [{
 			key: "build",
 			value: function build(data) {
-				return new FadeOutInBackground(data.path || "", data._duration || 1000);
+				return new FadeOutInBackground(data.path || "", data._duration || data.duration || 1000);
 			}
 		}]);
 
@@ -49415,7 +49415,9 @@
 	// module.exports=FadeOutInBackground
 
 /***/ },
-/* 383 */
+/* 383 */,
+/* 384 */,
+/* 385 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -49477,7 +49479,7 @@
 		}], [{
 			key: "deserialize",
 			value: function deserialize(data) {
-				return __webpack_require__(384)("./" + data._group + "/" + data._type).build(data);
+				return __webpack_require__(386)("./" + data._group + "/" + data._type).build(data);
 			}
 		}]);
 
@@ -49487,16 +49489,16 @@
 	Reflect.defineMetadata("design:paramtypes", [Number], PayloadAction);
 
 /***/ },
-/* 384 */
+/* 386 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./PayloadAction": 383,
-		"./PayloadAction.js": 383,
+		"./PayloadAction": 385,
+		"./PayloadAction.js": 385,
 		"./bg/FadeOutInBackground": 382,
 		"./bg/FadeOutInBackground.js": 382,
-		"./node/ShowTextAction": 386,
-		"./node/ShowTextAction.js": 386
+		"./node/ShowTextAction": 387,
+		"./node/ShowTextAction.js": 387
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -49509,19 +49511,18 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 384;
+	webpackContext.id = 386;
 
 
 /***/ },
-/* 385 */,
-/* 386 */
+/* 387 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _PayloadAction2 = __webpack_require__(383);
+	var _PayloadAction2 = __webpack_require__(385);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -49555,8 +49556,8 @@
 		}], [{
 			key: "build",
 			value: function build(data) {
-				var action = new ShowTextAction(data.text || "", data._duration || 500);
-				action.nextDelay = data._nextDelay || data._duration || 500;
+				var action = new ShowTextAction(data.text || "", data._duration || data.duration || 500);
+				action.nextDelay = data._nextDelay || data.nextDelay || data._duration || data.duration || 500;
 				return action;
 			}
 		}]);

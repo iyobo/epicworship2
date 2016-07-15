@@ -17,7 +17,7 @@ module.exports= class FadeOutInBackground extends PayloadAction{
 	}
 
 	static build(data){
-		return new FadeOutInBackground(data.path||"", data._duration|| 1000);
+		return new FadeOutInBackground(data.path||"", data._duration||data.duration|| 1000);
 	}
 
 	/**
