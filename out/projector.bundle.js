@@ -67,7 +67,6 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var ipc = electron.ipcRenderer;
-	var vid = $("#bgvid");
 
 	var ProjectorApp = exports.ProjectorApp = (_dec = (0, _core.Component)({
 		selector: 'projector',
@@ -49386,6 +49385,17 @@
 			key: "perform",
 			value: function perform(ctx) {
 				console.log("changing Background...");
+				var vid = $("#bgvid");
+				$('#bgvid source').attr('src', this.path);
+
+				vid.addClass('animated fadeOut');
+				vid.one('animationend', function () {
+
+					vid[0].load();
+					// txt.text('We Worship you Hallelujah Hallejujah');
+					vid.removeClass('fadeOut');
+					vid.addClass('fadeIn');
+				});
 			}
 		}, {
 			key: "nextDelay",

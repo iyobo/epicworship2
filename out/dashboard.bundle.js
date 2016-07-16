@@ -54260,6 +54260,17 @@
 			key: "perform",
 			value: function perform(ctx) {
 				console.log("changing Background...");
+				var vid = $("#bgvid");
+				$('#bgvid source').attr('src', this.path);
+
+				vid.addClass('animated fadeOut');
+				vid.one('animationend', function () {
+
+					vid[0].load();
+					// txt.text('We Worship you Hallelujah Hallejujah');
+					vid.removeClass('fadeOut');
+					vid.addClass('fadeIn');
+				});
 			}
 		}, {
 			key: "nextDelay",

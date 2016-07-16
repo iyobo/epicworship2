@@ -5,7 +5,7 @@ import {Component} from '@angular/core';
 import {bootstrap}    from '@angular/platform-browser-dynamic';
 import {PayloadAction} from "../shared/payload/actions/PayloadAction";
 const ipc = electron.ipcRenderer;
-var vid = $("#bgvid");
+
 
 @Component({
 	selector: 'projector',
