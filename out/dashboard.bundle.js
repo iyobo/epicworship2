@@ -54233,20 +54233,66 @@
 
 	var _set = function set(object, property, value, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent !== null) { set(parent, property, value, receiver); } } else if ("value" in desc && desc.writable) { desc.value = value; } else { var setter = desc.set; if (setter !== undefined) { setter.call(receiver, value); } } return value; };
 
+	var _dec, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3; /**
+	                                                                                    * Created by iyobo on 2016-07-15.
+	                                                                                    */
+
+
 	var _PayloadAction2 = __webpack_require__(385);
+
+	var _cerialize = __webpack_require__(383);
+
+	function _initDefineProp(target, property, descriptor, context) {
+		if (!descriptor) return;
+		Object.defineProperty(target, property, {
+			enumerable: descriptor.enumerable,
+			configurable: descriptor.configurable,
+			writable: descriptor.writable,
+			value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+		});
+	}
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by iyobo on 2016-07-15.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+		var desc = {};
+		Object['ke' + 'ys'](descriptor).forEach(function (key) {
+			desc[key] = descriptor[key];
+		});
+		desc.enumerable = !!desc.enumerable;
+		desc.configurable = !!desc.configurable;
+
+		if ('value' in desc || desc.initializer) {
+			desc.writable = true;
+		}
+
+		desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+			return decorator(target, property, desc) || desc;
+		}, desc);
+
+		if (context && desc.initializer !== void 0) {
+			desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+			desc.initializer = undefined;
+		}
+
+		if (desc.initializer === void 0) {
+			Object['define' + 'Property'](target, property, desc);
+			desc = null;
+		}
+
+		return desc;
+	}
+
+	function _initializerWarningHelper(descriptor, context) {
+		throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+	}
 
 	var number = Number; //Annoying syntax highlighter fix
-
-	module.exports = function (_PayloadAction) {
+	var FadeOutInBackground = (_dec = (0, _cerialize.inheritSerialization)(_PayloadAction2.PayloadAction), _dec(_class = (_class2 = function (_PayloadAction) {
 		_inherits(FadeOutInBackground, _PayloadAction);
 
 		function FadeOutInBackground(path, duration) {
@@ -54254,8 +54300,11 @@
 
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FadeOutInBackground).call(this, duration));
 
-			_this._group = "bg";
-			_this._type = "FadeOutInBackground";
+			_initDefineProp(_this, "path", _descriptor, _this);
+
+			_initDefineProp(_this, "_group", _descriptor2, _this);
+
+			_initDefineProp(_this, "_type", _descriptor3, _this);
 
 			_this.nextDelay = duration / 2;
 			_this.path = path;
@@ -54301,13 +54350,623 @@
 		}]);
 
 		return FadeOutInBackground;
-	}(_PayloadAction2.PayloadAction);
+	}(_PayloadAction2.PayloadAction), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "path", [_cerialize.autoserialize], {
+		enumerable: true,
+		initializer: function initializer() {
+			return this.path;
+		}
+	}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "_group", [_cerialize.autoserialize], {
+		enumerable: true,
+		initializer: function initializer() {
+			return "bg";
+		}
+	}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "_type", [_cerialize.autoserialize], {
+		enumerable: true,
+		initializer: function initializer() {
+			return "FadeOutInBackground";
+		}
+	})), _class2)) || _class);
+	Reflect.defineMetadata("design:paramtypes", [String, Number], FadeOutInBackground);
 
-	// module.exports=FadeOutInBackground
+
+	module.exports = FadeOutInBackground;
 
 /***/ },
-/* 383 */,
-/* 384 */,
+/* 383 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(384);
+
+/***/ },
+/* 384 */
+/***/ function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {var win = null;
+	try {
+	    win = window;
+	}
+	catch (e) {
+	    win = global;
+	}
+	//some other modules might want access to the serialization meta data, expose it here
+	var TypeMap = win.__CerializeTypeMap = new Map();
+	exports.__TypeMap = TypeMap;
+	//convert strings like my_camel_string to myCamelString
+	function CamelCase(str) {
+	    var STRING_CAMELIZE_REGEXP = (/(\-|_|\.|\s)+(.)?/g);
+	    return str.replace(STRING_CAMELIZE_REGEXP, function (match, separator, chr) {
+	        return chr ? chr.toUpperCase() : '';
+	    }).replace(/^([A-Z])/, function (match, separator, chr) {
+	        return match.toLowerCase();
+	    });
+	}
+	exports.CamelCase = CamelCase;
+	//convert strings like MyCamelString to my_camel_string
+	function SnakeCase(str) {
+	    var STRING_DECAMELIZE_REGEXP = (/([a-z\d])([A-Z])/g);
+	    return str.replace(STRING_DECAMELIZE_REGEXP, '$1_$2').toLowerCase();
+	}
+	exports.SnakeCase = SnakeCase;
+	//convert strings like myCamelCase to my_camel_case
+	function UnderscoreCase(str) {
+	    var STRING_UNDERSCORE_REGEXP_1 = (/([a-z\d])([A-Z]+)/g);
+	    var STRING_UNDERSCORE_REGEXP_2 = (/\-|\s+/g);
+	    return str.replace(STRING_UNDERSCORE_REGEXP_1, '$1_$2').replace(STRING_UNDERSCORE_REGEXP_2, '_').toLowerCase();
+	}
+	exports.UnderscoreCase = UnderscoreCase;
+	//convert strings like my_camelCase to my-camel-case
+	function DashCase(str) {
+	    var STRING_DASHERIZE_REGEXP = (/([a-z\d])([A-Z])/g);
+	    str = str.replace(/_/g, '-');
+	    return str.replace(STRING_DASHERIZE_REGEXP, '$1-$2').toLowerCase();
+	}
+	exports.DashCase = DashCase;
+	//gets meta data for a key name, creating a new meta data instance
+	//if the input array doesn't already define one for the given keyName
+	function getMetaData(array, keyName) {
+	    for (var i = 0; i < array.length; i++) {
+	        if (array[i].keyName === keyName) {
+	            return array[i];
+	        }
+	    }
+	    array.push(new MetaData(keyName));
+	    return array[array.length - 1];
+	}
+	//helper for grabbing the type and keyname from a multi-type input variable
+	function getTypeAndKeyName(keyNameOrType, keyName) {
+	    var type = null;
+	    var key = null;
+	    if (typeof keyNameOrType === "string") {
+	        key = keyNameOrType;
+	    }
+	    else if (keyNameOrType && typeof keyNameOrType === "function" || typeof keyNameOrType === "object") {
+	        type = keyNameOrType;
+	        key = keyName;
+	    }
+	    return { key: key, type: type };
+	}
+	//todo instance.constructor.prototype.__proto__ === parent class, maybe use this?
+	//because types are stored in a JS Map keyed by constructor, serialization is not inherited by default
+	//keeping this seperate by default also allows sub classes to serialize differently than their parent
+	function inheritSerialization(parentType) {
+	    return function (childType) {
+	        var parentMetaData = TypeMap.get(parentType) || [];
+	        var childMetaData = TypeMap.get(childType) || [];
+	        for (var i = 0; i < parentMetaData.length; i++) {
+	            var keyName = parentMetaData[i].keyName;
+	            if (!MetaData.hasKeyName(childMetaData, keyName)) {
+	                childMetaData.push(MetaData.clone(parentMetaData[i]));
+	            }
+	        }
+	        TypeMap.set(childType, childMetaData);
+	    };
+	}
+	exports.inheritSerialization = inheritSerialization;
+	//an untyped serialization property annotation, gets existing meta data for the target or creates
+	//a new one and assigns the serialization key for that type in the meta data
+	function serialize(target, keyName) {
+	    if (!target || !keyName)
+	        return;
+	    var metaDataList = TypeMap.get(target.constructor) || [];
+	    var metadata = getMetaData(metaDataList, keyName);
+	    metadata.serializedKey = keyName;
+	    TypeMap.set(target.constructor, metaDataList);
+	}
+	exports.serialize = serialize;
+	//an untyped deserialization property annotation, gets existing meta data for the target or creates
+	//a new one and assigns the deserialization key for that type in the meta data
+	function deserialize(target, keyName) {
+	    if (!target || !keyName)
+	        return;
+	    var metaDataList = TypeMap.get(target.constructor) || [];
+	    var metadata = getMetaData(metaDataList, keyName);
+	    metadata.deserializedKey = keyName;
+	    TypeMap.set(target.constructor, metaDataList);
+	}
+	exports.deserialize = deserialize;
+	//this combines @serialize and @deserialize as defined above
+	function autoserialize(target, keyName) {
+	    if (!target || !keyName)
+	        return;
+	    var metaDataList = TypeMap.get(target.constructor) || [];
+	    var metadata = getMetaData(metaDataList, keyName);
+	    metadata.serializedKey = keyName;
+	    metadata.deserializedKey = keyName;
+	    TypeMap.set(target.constructor, metaDataList);
+	}
+	exports.autoserialize = autoserialize;
+	//We dont actually need the type to serialize but I like the consistency with deserializeAs which definitely does
+	//serializes a type using 1.) a custom key name, 2.) a custom type, or 3.) both custom key and type
+	function serializeAs(keyNameOrType, keyName) {
+	    if (!keyNameOrType)
+	        return;
+	    var _a = getTypeAndKeyName(keyNameOrType, keyName), key = _a.key, type = _a.type;
+	    return function (target, actualKeyName) {
+	        if (!target || !actualKeyName)
+	            return;
+	        var metaDataList = TypeMap.get(target.constructor) || [];
+	        var metadata = getMetaData(metaDataList, actualKeyName);
+	        metadata.serializedKey = (key) ? key : actualKeyName;
+	        metadata.serializedType = type;
+	        //this allows the type to be a stand alone function instead of a class
+	        if (type !== Date && type !== RegExp && !TypeMap.get(type) && typeof type === "function") {
+	            metadata.serializedType = {
+	                Serialize: type
+	            };
+	        }
+	        TypeMap.set(target.constructor, metaDataList);
+	    };
+	}
+	exports.serializeAs = serializeAs;
+	//deserializes a type using 1.) a custom key name, 2.) a custom type, or 3.) both custom key and type
+	function deserializeAs(keyNameOrType, keyName) {
+	    if (!keyNameOrType)
+	        return;
+	    var _a = getTypeAndKeyName(keyNameOrType, keyName), key = _a.key, type = _a.type;
+	    return function (target, actualKeyName) {
+	        if (!target || !actualKeyName)
+	            return;
+	        var metaDataList = TypeMap.get(target.constructor) || [];
+	        var metadata = getMetaData(metaDataList, actualKeyName);
+	        metadata.deserializedKey = (key) ? key : actualKeyName;
+	        metadata.deserializedType = type;
+	        //this allows the type to be a stand alone function instead of a class
+	        if (!TypeMap.get(type) && type !== Date && type !== RegExp && typeof type === "function") {
+	            metadata.deserializedType = {
+	                Deserialize: type
+	            };
+	        }
+	        TypeMap.set(target.constructor, metaDataList);
+	    };
+	}
+	exports.deserializeAs = deserializeAs;
+	//serializes and deserializes a type using 1.) a custom key name, 2.) a custom type, or 3.) both custom key and type
+	function autoserializeAs(keyNameOrType, keyName) {
+	    if (!keyNameOrType)
+	        return;
+	    var _a = getTypeAndKeyName(keyNameOrType, keyName), key = _a.key, type = _a.type;
+	    return function (target, actualKeyName) {
+	        if (!target || !actualKeyName)
+	            return;
+	        var metaDataList = TypeMap.get(target.constructor) || [];
+	        var metadata = getMetaData(metaDataList, actualKeyName);
+	        var serialKey = (key) ? key : actualKeyName;
+	        metadata.deserializedKey = serialKey;
+	        metadata.deserializedType = type;
+	        metadata.serializedKey = serialKey;
+	        metadata.serializedType = type;
+	        TypeMap.set(target.constructor, metaDataList);
+	    };
+	}
+	exports.autoserializeAs = autoserializeAs;
+	function autoserializeIndexable(type, keyName) {
+	    if (!type)
+	        return;
+	    var key = keyName;
+	    return function (target, actualKeyName) {
+	        if (!target || !actualKeyName)
+	            return;
+	        var metaDataList = TypeMap.get(target.constructor) || [];
+	        var metadata = getMetaData(metaDataList, actualKeyName);
+	        var serialKey = (key) ? key : actualKeyName;
+	        metadata.deserializedKey = serialKey;
+	        metadata.deserializedType = type;
+	        metadata.serializedKey = serialKey;
+	        metadata.serializedType = type;
+	        metadata.indexable = true;
+	        TypeMap.set(target.constructor, metaDataList);
+	    };
+	}
+	exports.autoserializeIndexable = autoserializeIndexable;
+	//helper class to contain serialization meta data for a property, each property
+	//in a type tagged with a serialization annotation will contain an array of these
+	//objects each describing one property
+	var MetaData = (function () {
+	    function MetaData(keyName) {
+	        this.keyName = keyName;
+	        this.serializedKey = null;
+	        this.deserializedKey = null;
+	        this.deserializedType = null;
+	        this.serializedType = null;
+	        this.indexable = false;
+	    }
+	    //checks for a key name in a meta data array
+	    MetaData.hasKeyName = function (metadataArray, key) {
+	        for (var i = 0; i < metadataArray.length; i++) {
+	            if (metadataArray[i].keyName === key)
+	                return true;
+	        }
+	        return false;
+	    };
+	    //clone a meta data instance, used for inheriting serialization properties
+	    MetaData.clone = function (data) {
+	        var metadata = new MetaData(data.keyName);
+	        metadata.deserializedKey = data.deserializedKey;
+	        metadata.serializedKey = data.serializedKey;
+	        metadata.serializedType = data.serializedType;
+	        metadata.deserializedType = data.deserializedType;
+	        metadata.indexable = data.indexable;
+	        return metadata;
+	    };
+	    return MetaData;
+	})();
+	//merges two primitive objects recursively, overwriting or defining properties on
+	//`instance` as they defined in `json`. Works on objects, arrays and primitives
+	function mergePrimitiveObjects(instance, json) {
+	    if (!json)
+	        return instance; //if we dont have a json value, just use what the instance defines already
+	    if (!instance)
+	        return json; //if we dont have an instance value, just use the json
+	    //for each key in the input json we need to do a merge into the instance object
+	    Object.keys(json).forEach(function (key) {
+	        var transformedKey = key;
+	        if (typeof deserializeKeyTransform === "function") {
+	            transformedKey = deserializeKeyTransform(key);
+	        }
+	        var jsonValue = json[key];
+	        var instanceValue = instance[key];
+	        if (Array.isArray(jsonValue)) {
+	            //in the array case we reuse the items that exist already where possible
+	            //so reset the instance array length (or make it an array if it isnt)
+	            //then call mergePrimitiveObjects recursively
+	            instanceValue = Array.isArray(instanceValue) ? instanceValue : [];
+	            instanceValue.length = jsonValue.length;
+	            for (var i = 0; i < instanceValue.length; i++) {
+	                instanceValue[i] = mergePrimitiveObjects(instanceValue[i], jsonValue[i]);
+	            }
+	        }
+	        else if (jsonValue && typeof jsonValue === "object") {
+	            if (!instanceValue || typeof instanceValue !== "object") {
+	                instanceValue = {};
+	            }
+	            instanceValue = mergePrimitiveObjects(instanceValue, jsonValue);
+	        }
+	        else {
+	            //primitive case, just use straight assignment
+	            instanceValue = jsonValue;
+	        }
+	        instance[transformedKey] = instanceValue;
+	    });
+	    return instance;
+	}
+	//takes an array defined in json and deserializes it into an array that ist stuffed with instances of `type`.
+	//any instances already defined in `arrayInstance` will be re-used where possible to maintain referential integrity.
+	function deserializeArrayInto(source, type, arrayInstance) {
+	    if (!Array.isArray(arrayInstance)) {
+	        arrayInstance = new Array(source.length);
+	    }
+	    //extend or truncate the target array to match the source array
+	    arrayInstance.length = source.length;
+	    for (var i = 0; i < source.length; i++) {
+	        arrayInstance[i] = DeserializeInto(source[i], type, arrayInstance[i] || new type());
+	    }
+	    return arrayInstance;
+	}
+	//takes an object defined in json and deserializes it into a `type` instance or populates / overwrites
+	//properties on `instance` if it is provided.
+	function deserializeObjectInto(json, type, instance) {
+	    var metadataArray = TypeMap.get(type);
+	    //if we dont have an instance we need to create a new `type`
+	    if (instance === null || instance === void 0) {
+	        if (type) {
+	            instance = new type();
+	        }
+	    }
+	    //if we dont have any meta data and we dont have a type to inflate, just merge the objects
+	    if (instance && !type && !metadataArray) {
+	        return mergePrimitiveObjects(instance, json);
+	    }
+	    //if we dont have meta data just bail out and keep what we have
+	    if (!metadataArray) {
+	        invokeDeserializeHook(instance, json, type);
+	        return instance;
+	    }
+	    //for each property in meta data, try to hydrate that property with its corresponding json value
+	    for (var i = 0; i < metadataArray.length; i++) {
+	        var metadata = metadataArray[i];
+	        //these are not the droids we're looking for (to deserialize), moving along
+	        if (!metadata.deserializedKey)
+	            continue;
+	        var serializedKey = metadata.deserializedKey;
+	        if (metadata.deserializedKey === metadata.keyName) {
+	            if (typeof deserializeKeyTransform === "function") {
+	                serializedKey = deserializeKeyTransform(metadata.keyName);
+	            }
+	        }
+	        var source = json[serializedKey];
+	        if (source === void 0)
+	            continue;
+	        var keyName = metadata.keyName;
+	        //if there is a custom deserialize function, use that
+	        if (metadata.deserializedType && typeof metadata.deserializedType.Deserialize === "function") {
+	            instance[keyName] = metadata.deserializedType.Deserialize(source);
+	        }
+	        else if (Array.isArray(source)) {
+	            if (metadata.deserializedType) {
+	                instance[keyName] = deserializeArrayInto(source, metadata.deserializedType, instance[keyName]);
+	            }
+	            else {
+	                instance[keyName] = deserializeArray(source, null);
+	            }
+	        }
+	        else if (typeof source === "string" && metadata.deserializedType === Date) {
+	            var deserializedDate = new Date(source);
+	            if (instance[keyName] instanceof Date) {
+	                instance[keyName].setTime(deserializedDate.getTime());
+	            }
+	            else {
+	                instance[keyName] = deserializedDate;
+	            }
+	        }
+	        else if (typeof source === "string" && type === RegExp) {
+	            instance[keyName] = new RegExp(source);
+	        }
+	        else if (source && typeof source === "object") {
+	            if (metadata.indexable) {
+	                instance[keyName] = deserializeIndexableInto(source, metadata.deserializedType, instance[keyName]);
+	            }
+	            else {
+	                instance[keyName] = deserializeObjectInto(source, metadata.deserializedType, instance[keyName]);
+	            }
+	        }
+	        else {
+	            instance[keyName] = source;
+	        }
+	    }
+	    //invoke our after deserialized callback if provided
+	    invokeDeserializeHook(instance, json, type);
+	    return instance;
+	}
+	//takes some json, a type, and a target object and deserializes the json into that object
+	function DeserializeInto(source, type, target) {
+	    if (Array.isArray(source)) {
+	        return deserializeArrayInto(source, type, target || []);
+	    }
+	    else if (source && typeof source === "object") {
+	        return deserializeObjectInto(source, type, target || new type());
+	    }
+	    else {
+	        return target || (type && new type()) || null;
+	    }
+	}
+	exports.DeserializeInto = DeserializeInto;
+	//deserializes an array of json into an array of `type`
+	function deserializeArray(source, type) {
+	    var retn = new Array(source.length);
+	    for (var i = 0; i < source.length; i++) {
+	        retn[i] = Deserialize(source[i], type);
+	    }
+	    return retn;
+	}
+	function invokeDeserializeHook(instance, json, type) {
+	    if (type && typeof (type).OnDeserialized === "function") {
+	        type.OnDeserialized(instance, json);
+	    }
+	}
+	function invokeSerializeHook(instance, json) {
+	    if (typeof (instance.constructor).OnSerialized === "function") {
+	        (instance.constructor).OnSerialized(instance, json);
+	    }
+	}
+	//deserialize a bit of json into an instance of `type`
+	function deserializeObject(json, type) {
+	    var metadataArray = TypeMap.get(type);
+	    //if we dont have meta data, just decode the json and use that
+	    if (!metadataArray) {
+	        var inst = null;
+	        if (!type) {
+	            inst = JSON.parse(JSON.stringify(json));
+	        }
+	        else {
+	            inst = new type(); //todo this probably wrong
+	            invokeDeserializeHook(inst, json, type);
+	        }
+	        return inst;
+	    }
+	    var instance = new type();
+	    //for each tagged property on the source type, try to deserialize it
+	    for (var i = 0; i < metadataArray.length; i++) {
+	        var metadata = metadataArray[i];
+	        if (!metadata.deserializedKey)
+	            continue;
+	        var serializedKey = metadata.deserializedKey;
+	        if (metadata.deserializedKey === metadata.keyName) {
+	            if (typeof deserializeKeyTransform === "function") {
+	                serializedKey = deserializeKeyTransform(metadata.keyName);
+	            }
+	        }
+	        var source = json[serializedKey];
+	        var keyName = metadata.keyName;
+	        if (source === void 0)
+	            continue;
+	        //if there is a custom deserialize function, use that
+	        if (metadata.deserializedType && typeof metadata.deserializedType.Deserialize === "function") {
+	            instance[keyName] = metadata.deserializedType.Deserialize(source);
+	        }
+	        else if (Array.isArray(source)) {
+	            instance[keyName] = deserializeArray(source, metadata.deserializedType || null);
+	        }
+	        else if (typeof source === "string" && metadata.deserializedType === Date) {
+	            instance[keyName] = new Date(source);
+	        }
+	        else if (typeof source === "string" && metadata.deserializedType === RegExp) {
+	            instance[keyName] = new RegExp(json);
+	        }
+	        else if (source && typeof source === "object") {
+	            if (metadata.indexable) {
+	                instance[keyName] = deserializeIndexable(source, metadata.deserializedType);
+	            }
+	            else {
+	                instance[keyName] = deserializeObject(source, metadata.deserializedType);
+	            }
+	        }
+	        else {
+	            instance[keyName] = source;
+	        }
+	    }
+	    invokeDeserializeHook(instance, json, type);
+	    return instance;
+	}
+	function deserializeIndexable(source, type) {
+	    var retn = {};
+	    //todo apply key transformation here?
+	    Object.keys(source).forEach(function (key) {
+	        retn[key] = deserializeObject(source[key], type);
+	    });
+	    return retn;
+	}
+	function deserializeIndexableInto(source, type, instance) {
+	    var retn = {};
+	    //todo apply key transformation here?
+	    Object.keys(source).forEach(function (key) {
+	        retn[key] = deserializeObjectInto(source[key], type, instance);
+	    });
+	    return retn;
+	}
+	//deserializes a bit of json into a `type`
+	function Deserialize(json, type) {
+	    if (Array.isArray(json)) {
+	        return deserializeArray(json, type);
+	    }
+	    else if (json && typeof json === "object") {
+	        return deserializeObject(json, type);
+	    }
+	    else if (typeof json === "string" && type === Date) {
+	        return new Date(json);
+	    }
+	    else if (typeof json === "string" && type === RegExp) {
+	        return new RegExp(json);
+	    }
+	    else {
+	        return json;
+	    }
+	}
+	exports.Deserialize = Deserialize;
+	//take an array and spit out json
+	function serializeArray(source) {
+	    var serializedArray = new Array(source.length);
+	    for (var j = 0; j < source.length; j++) {
+	        serializedArray[j] = Serialize(source[j]);
+	    }
+	    return serializedArray;
+	}
+	//take an instance of something and try to spit out json for it based on property annotaitons
+	function serializeTypedObject(instance) {
+	    var json = {};
+	    var metadataArray = TypeMap.get(instance.constructor);
+	    for (var i = 0; i < metadataArray.length; i++) {
+	        var metadata = metadataArray[i];
+	        if (!metadata.serializedKey)
+	            continue;
+	        var serializedKey = metadata.serializedKey;
+	        if (metadata.serializedKey === metadata.keyName) {
+	            if (typeof serializeKeyTransform === "function") {
+	                serializedKey = serializeKeyTransform(metadata.keyName);
+	            }
+	        }
+	        var source = instance[metadata.keyName];
+	        if (source === void 0)
+	            continue;
+	        if (Array.isArray(source)) {
+	            json[serializedKey] = serializeArray(source);
+	        }
+	        else if (metadata.serializedType && typeof metadata.serializedType.Serialize === "function") {
+	            json[serializedKey] = metadata.serializedType.Serialize(source);
+	        }
+	        else {
+	            var value = Serialize(source);
+	            if (value !== void 0) {
+	                json[serializedKey] = value;
+	            }
+	        }
+	    }
+	    invokeSerializeHook(instance, json);
+	    return json;
+	}
+	//take an instance of something and spit out some json
+	function Serialize(instance) {
+	    if (instance === null || instance === void 0)
+	        return null;
+	    if (Array.isArray(instance)) {
+	        return serializeArray(instance);
+	    }
+	    if (instance.constructor && TypeMap.has(instance.constructor)) {
+	        return serializeTypedObject(instance);
+	    }
+	    if (instance instanceof Date || instance instanceof RegExp) {
+	        return instance.toString();
+	    }
+	    if (instance && typeof instance === 'object' || typeof instance === 'function') {
+	        var keys = Object.keys(instance);
+	        var json = {};
+	        for (var i = 0; i < keys.length; i++) {
+	            //todo this probably needs a key transform
+	            json[keys[i]] = Serialize(instance[keys[i]]);
+	        }
+	        invokeSerializeHook(instance, json);
+	        return json;
+	    }
+	    return instance;
+	}
+	exports.Serialize = Serialize;
+	function GenericDeserialize(json, type) {
+	    return Deserialize(json, type);
+	}
+	exports.GenericDeserialize = GenericDeserialize;
+	function GenericDeserializeInto(json, type, instance) {
+	    return DeserializeInto(json, type, instance);
+	}
+	exports.GenericDeserializeInto = GenericDeserializeInto;
+	//these are used for transforming keys from one format to another
+	var serializeKeyTransform = null;
+	var deserializeKeyTransform = null;
+	//setter for deserializing key transform
+	function DeserializeKeysFrom(transform) {
+	    deserializeKeyTransform = transform;
+	}
+	exports.DeserializeKeysFrom = DeserializeKeysFrom;
+	//setter for serializing key transform
+	function SerializeKeysTo(transform) {
+	    serializeKeyTransform = transform;
+	}
+	exports.SerializeKeysTo = SerializeKeysTo;
+	//this is kinda dumb but typescript doesnt treat enums as a type, but sometimes you still
+	//want them to be serialized / deserialized, this does the trick but must be called after
+	//the enum is defined.
+	function SerializableEnumeration(e) {
+	    e.Serialize = function (x) {
+	        return e[x];
+	    };
+	    e.Deserialize = function (x) {
+	        return e[x];
+	    };
+	}
+	exports.SerializableEnumeration = SerializableEnumeration;
+	//expose the type map
+
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
 /* 385 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -54316,26 +54975,76 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+	exports.PayloadAction = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4; /**
+	                                                                                   * Created by iyobo on 2016-07-15.
+	                                                                                   */
+
+
+	var _cerialize = __webpack_require__(383);
+
+	function _initDefineProp(target, property, descriptor, context) {
+		if (!descriptor) return;
+		Object.defineProperty(target, property, {
+			enumerable: descriptor.enumerable,
+			configurable: descriptor.configurable,
+			writable: descriptor.writable,
+			value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+		});
+	}
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	/**
-	 * Created by iyobo on 2016-07-15.
-	 */
+	function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+		var desc = {};
+		Object['ke' + 'ys'](descriptor).forEach(function (key) {
+			desc[key] = descriptor[key];
+		});
+		desc.enumerable = !!desc.enumerable;
+		desc.configurable = !!desc.configurable;
+
+		if ('value' in desc || desc.initializer) {
+			desc.writable = true;
+		}
+
+		desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+			return decorator(target, property, desc) || desc;
+		}, desc);
+
+		if (context && desc.initializer !== void 0) {
+			desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+			desc.initializer = undefined;
+		}
+
+		if (desc.initializer === void 0) {
+			Object['define' + 'Property'](target, property, desc);
+			desc = null;
+		}
+
+		return desc;
+	}
+
+	function _initializerWarningHelper(descriptor, context) {
+		throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+	}
+
 	/**
 	 * Payload actions can either create nodes or do specific tasks...all of which should be done within the perform object.
 	 */
-
-	var PayloadAction = exports.PayloadAction = function () {
+	var PayloadAction = exports.PayloadAction = (_class = function () {
 		function PayloadAction(duration) {
 			_classCallCheck(this, PayloadAction);
 
-			this._duration = 1000;
-			this._nextDelay = 1000;
-			this._group = "notset";
-			this._type = "notset";
+			_initDefineProp(this, "_duration", _descriptor, this);
+
+			_initDefineProp(this, "_nextDelay", _descriptor2, this);
+
+			_initDefineProp(this, "_group", _descriptor3, this);
+
+			_initDefineProp(this, "_type", _descriptor4, this);
 
 			this._duration = duration;
 			this._nextDelay = duration;
@@ -54370,13 +55079,32 @@
 		}], [{
 			key: "deserialize",
 			value: function deserialize(data) {
-				return __webpack_require__(386)("./" + data._group + "/" + data._type).build(data);
+				return (0, _cerialize.Deserialize)(data, __webpack_require__(386)("./" + data._group + "/" + data._type));
 			}
 		}]);
 
 		return PayloadAction;
-	}();
-
+	}(), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "_duration", [_cerialize.autoserialize], {
+		enumerable: true,
+		initializer: function initializer() {
+			return 1000;
+		}
+	}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "_nextDelay", [_cerialize.autoserialize], {
+		enumerable: true,
+		initializer: function initializer() {
+			return 1000;
+		}
+	}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "_group", [_cerialize.autoserialize], {
+		enumerable: true,
+		initializer: function initializer() {
+			return "notset";
+		}
+	}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "_type", [_cerialize.autoserialize], {
+		enumerable: true,
+		initializer: function initializer() {
+			return "notset";
+		}
+	})), _class);
 	Reflect.defineMetadata("design:paramtypes", [Number], PayloadAction);
 
 /***/ },
@@ -54413,18 +55141,65 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3; /**
+	                                                                                    * Created by iyobo on 2016-07-15.
+	                                                                                    */
+
+
 	var _PayloadAction2 = __webpack_require__(385);
+
+	var _cerialize = __webpack_require__(383);
+
+	function _initDefineProp(target, property, descriptor, context) {
+		if (!descriptor) return;
+		Object.defineProperty(target, property, {
+			enumerable: descriptor.enumerable,
+			configurable: descriptor.configurable,
+			writable: descriptor.writable,
+			value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+		});
+	}
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by iyobo on 2016-07-15.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+		var desc = {};
+		Object['ke' + 'ys'](descriptor).forEach(function (key) {
+			desc[key] = descriptor[key];
+		});
+		desc.enumerable = !!desc.enumerable;
+		desc.configurable = !!desc.configurable;
 
-	module.exports = function (_PayloadAction) {
+		if ('value' in desc || desc.initializer) {
+			desc.writable = true;
+		}
+
+		desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+			return decorator(target, property, desc) || desc;
+		}, desc);
+
+		if (context && desc.initializer !== void 0) {
+			desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+			desc.initializer = undefined;
+		}
+
+		if (desc.initializer === void 0) {
+			Object['define' + 'Property'](target, property, desc);
+			desc = null;
+		}
+
+		return desc;
+	}
+
+	function _initializerWarningHelper(descriptor, context) {
+		throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+	}
+
+	var ShowTextAction = (_dec = (0, _cerialize.inheritSerialization)(_PayloadAction2.PayloadAction), _dec(_class = (_class2 = function (_PayloadAction) {
 		_inherits(ShowTextAction, _PayloadAction);
 
 		function ShowTextAction(text, duration) {
@@ -54432,8 +55207,11 @@
 
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ShowTextAction).call(this, duration));
 
-			_this._group = "node";
-			_this._type = "ShowTextAction";
+			_initDefineProp(_this, "text", _descriptor, _this);
+
+			_initDefineProp(_this, "_group", _descriptor2, _this);
+
+			_initDefineProp(_this, "_type", _descriptor3, _this);
 
 			_this.text = text;
 			return _this;
@@ -54458,9 +55236,26 @@
 		}]);
 
 		return ShowTextAction;
-	}(_PayloadAction2.PayloadAction);
+	}(_PayloadAction2.PayloadAction), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "text", [_cerialize.autoserialize], {
+		enumerable: true,
+		initializer: function initializer() {
+			return this.text;
+		}
+	}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "_group", [_cerialize.autoserialize], {
+		enumerable: true,
+		initializer: function initializer() {
+			return "node";
+		}
+	}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "_type", [_cerialize.autoserialize], {
+		enumerable: true,
+		initializer: function initializer() {
+			return "ShowTextAction";
+		}
+	})), _class2)) || _class);
+	Reflect.defineMetadata("design:paramtypes", [String, Number], ShowTextAction);
 
-	// module.exports=FadeOutInBackground
+
+	module.exports = ShowTextAction;
 
 /***/ }
 /******/ ]);

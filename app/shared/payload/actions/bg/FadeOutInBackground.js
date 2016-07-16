@@ -2,22 +2,24 @@
  * Created by iyobo on 2016-07-15.
  */
 import {PayloadAction} from "../PayloadAction";
-var number=Number;//Annoying syntax highlighter fix
+var number = Number;//Annoying syntax highlighter fix
+import {autoserialize,inheritSerialization} from 'cerialize';
 
-module.exports= class FadeOutInBackground extends PayloadAction{
+@inheritSerialization(PayloadAction)
+class FadeOutInBackground extends PayloadAction {
 
-	path: String;
-	_group: String= "bg";
-	_type: String="FadeOutInBackground";
+	@autoserialize path:String;
+	@autoserialize _group:String = "bg";
+	@autoserialize _type:String = "FadeOutInBackground";
 
 	constructor(path:String, duration:Number) {
 		super(duration);
-		this.nextDelay = duration/2;
+		this.nextDelay = duration / 2;
 		this.path = path;
 	}
 
-	static build(data){
-		return new FadeOutInBackground(data.path||"", data._duration||data.duration|| 1000);
+	static build(data) {
+		return new FadeOutInBackground(data.path || "", data._duration || data.duration || 1000);
 	}
 
 	/**
@@ -26,11 +28,11 @@ module.exports= class FadeOutInBackground extends PayloadAction{
 	 */
 
 	get nextDelay() {
-		return this.duration/2;
+		return this.duration / 2;
 	}
 
 
-	set nextDelay(value: number) {
+	set nextDelay(value:number) {
 		return super.nextDelay = value;
 	}
 
@@ -50,4 +52,4 @@ module.exports= class FadeOutInBackground extends PayloadAction{
 	}
 }
 
-// module.exports=FadeOutInBackground
+module.exports=FadeOutInBackground

@@ -6,6 +6,7 @@ const app = electron.app
 const BrowserWindow = electron.BrowserWindow;
 const ipc = electron.ipcMain;
 
+
 app.on("ready", function () {
 
 	projector = new BrowserWindow({width: 600, height: 800});

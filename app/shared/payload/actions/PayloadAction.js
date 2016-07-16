@@ -1,24 +1,24 @@
-
 /**
  * Created by iyobo on 2016-07-15.
  */
+import {autoserialize,Deserialize} from 'cerialize';
+
 /**
  * Payload actions can either create nodes or do specific tasks...all of which should be done within the perform object.
  */
-export class PayloadAction{
-	_duration: Number = 1000;
-	_nextDelay: Number = 1000;
-	_group:String="notset";
-	_type:String="notset";
-	
+export class PayloadAction {
+	@autoserialize _duration:Number = 1000;
+	@autoserialize _nextDelay:Number = 1000;
+	@autoserialize _group:String = "notset";
+	@autoserialize _type:String = "notset";
 
 	constructor(duration:Number) {
 		this._duration = duration;
 		this._nextDelay = duration;
 	}
 
-	static deserialize(data){
-		return require("./"+data._group+"/"+data._type).build(data);
+	static deserialize(data) {
+		return Deserialize(data,require("./" + data._group + "/" + data._type))
 	}
 
 
@@ -43,7 +43,7 @@ export class PayloadAction{
 	 * i.e. animations, creation of nodes, jquery modifications, etc.
 	 * @param args
 	 */
-	perform(projector){
+	perform(projector) {
 
 	}
 

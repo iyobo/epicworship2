@@ -3,6 +3,7 @@ const app = electron.app
 const dialog = electron.dialog
 const BrowserWindow = electron.BrowserWindow
 const ipc = require('electron').ipcMain
+const cerial = require("cerialize");
 
 //Electron
 var electronBin = app.getPath('exe') //"./node_modules/.bin/electron"
@@ -57,12 +58,12 @@ function setupIPCActions() {
 		if (args.length == 2) {
 			//push to all projectors
 			for (var name in projectors) {
-				projectors[name].stdin.write(JSON.stringify(args[1]));
+				projectors[name].stdin.write(cerial.Serialize(args[1]));
 			}
 		}
 		else if (args.length > 2) {
 			//push to one projector
-			projectors[args[1]].stdin.write(JSON.stringify(args[2]));
+			projectors[args[1]].stdin.write(cerial.Serialize(JSON.stringify(args[2])));
 		}
 
 
