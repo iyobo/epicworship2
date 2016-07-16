@@ -36,9 +36,18 @@ class FadeOutInBackground extends PayloadAction {
 		return super.nextDelay = value;
 	}
 
-	perform(ctx) {
+
+	canEnter(ctx) {
+		if(ctx.currentBg[0] === this.path[0])
+			return false; //No need changing bg if it is already active.
+		else
+			return true;
+	}
+
+	enter(ctx) {
 		var vid = $("#bgvid");
 		$('#bgvid source').attr('src', this.path);
+		ctx.currentBg = this.path;
 
 		vid.addClass('animated fadeOut');
 		vid.one('animationend', function () {

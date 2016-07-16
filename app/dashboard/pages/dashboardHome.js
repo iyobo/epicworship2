@@ -30,23 +30,34 @@ export class DashboardHome {
 					ShowTextAction.build({
 						text: "Why do you run?\n Who are you?\nFollow the brick",
 						_duration: 600,
-						_nextDelay: 300,
+						_nextDelay: 1,
 						cssStyle: `
 						`,
+						position:`
+							left: 20px;
+							top: 200px;
+						`,
+						z: 1,
 						animations: {
-							entry: "fadeInLeft",
-							exit: "fadeOutRight"
+							enter: "fadeInLeft",
+							leave: "fadeOut"
 						}
 					}),
 					ShowTextAction.build({
-						text: "Title of this Party",
+						text: new Date(),
 						_duration: 600,
-						_nextDelay: 300,
+						_nextDelay: 1,
 						cssStyle: `
 						`,
+						color: "white",
+						position:`
+							left: 20px;
+							bottom: 20px;
+						`,
+						z: 1,
 						animations: {
-							entry: "fadeInLeft",
-							exit: "fadeOutRight"
+							enter: "fadeIn",
+							leave: "fadeOut"
 						}
 					})
 				],

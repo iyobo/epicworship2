@@ -40,12 +40,24 @@ export class PayloadAction {
 	}
 
 	/**
+	 * Precondition to determine if this action should be ran/entered
+	 * @param ctx
+	 */
+	canEnter(ctx){
+		return true;
+	}
+
+	/**
 	 * Use this, if applicable, to perform this action. Takes in the projector context
 	 * i.e. animations, creation of nodes, jquery modifications, etc.
 	 * @param args
 	 */
-	perform(projector) {
+	enter(ctx) {
 
+	}
+
+	leave(ctx){
+		
 	}
 
 

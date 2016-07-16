@@ -74,14 +74,15 @@
 	}), _dec(_class = function () {
 		function ProjectorApp() {
 			_classCallCheck(this, ProjectorApp);
+
+			this.currentNodes = [];
+			this.currentBg = "../../assets/bg/videos/video.mp4";
 		}
 
 		_createClass(ProjectorApp, [{
 			key: 'ngOnInit',
 			value: function ngOnInit() {
 				var _this = this;
-
-				this.currentNodes = [];
 
 				//main process says we should do something
 				ipc.on('payload', function (event, payload) {
@@ -92,15 +93,15 @@
 
 					var currentTicks = 0;
 					payload.forEach(function (item) {
-						//TODO: deserialize action
-						console.log("raw:", item);
+						//deserialize streamed action
 						var action = _PayloadAction.PayloadAction.deserialize(item);
-						console.log("Action:", action);
 
-						setTimeout(function () {
-							action.perform(_this);
-						}, currentTicks);
-						currentTicks += action.nextDelay;
+						if (action.canEnter(_this) === true) {
+							setTimeout(function () {
+								action.enter(_this);
+							}, currentTicks);
+							currentTicks += action.nextDelay;
+						}
 					});
 				});
 			}
@@ -49413,10 +49414,17 @@
 		}
 
 		_createClass(FadeOutInBackground, [{
-			key: "perform",
-			value: function perform(ctx) {
+			key: "canEnter",
+			value: function canEnter(ctx) {
+				if (ctx.currentBg[0] === this.path[0]) return false; //No need changing bg if it is already active.
+				else return true;
+			}
+		}, {
+			key: "enter",
+			value: function enter(ctx) {
 				var vid = $("#bgvid");
 				$('#bgvid source').attr('src', this.path);
+				ctx.currentBg = this.path;
 
 				vid.addClass('animated fadeOut');
 				vid.one('animationend', function () {
@@ -49557,15 +49565,29 @@
 		}
 
 		_createClass(PayloadAction, [{
-			key: "perform",
+			key: "canEnter",
 
+
+			/**
+	   * Precondition to determine if this action should be ran/entered
+	   * @param ctx
+	   */
+			value: function canEnter(ctx) {
+				return true;
+			}
 
 			/**
 	   * Use this, if applicable, to perform this action. Takes in the projector context
 	   * i.e. animations, creation of nodes, jquery modifications, etc.
 	   * @param args
 	   */
-			value: function perform(projector) {}
+
+		}, {
+			key: "enter",
+			value: function enter(ctx) {}
+		}, {
+			key: "leave",
+			value: function leave(ctx) {}
 		}, {
 			key: "duration",
 			get: function get() {
@@ -50324,14 +50346,31 @@
 		}
 
 		_createClass(ShowTextAction, [{
-			key: "perform",
-			value: function perform(ctx) {
-				console.log("Showing Text:", this.text);
+			key: "enter",
+			value: function enter(ctx) {
+				// console.log("Showing Text:", this.text);
 				var canvas = $("#canvas");
 
-				var node = $("<div class=\"node animated " + this.props.animations.entry + "\" style=\"" + this.props.cssStyle + " color:" + (this.props.color || "white") + ";   animation-duration: " + this.duration / 1000 + "s; \">" + this.text + "</div>");
+				this.node = $("<div \n\t\t\tclass=\"node animated " + this.props.animations.enter + "\" \n\t\t\tstyle=\"\n\t\t\t\t" + this.props.cssStyle + " \n\t\t\t\tcolor:" + (this.props.color || "white") + ";   \n\t\t\t\tanimation-duration: " + this.duration / 1000 + "s; \n\t\t\t\t\n\t\t\t\t" + this.props.position + "\n\n\t\t\t\tz-index: " + this.props.z + "\n\t\t\t\t\n\t\t\t\">" + this.text + "</div>");
+				this.nodeIndex = ctx.currentNodes.push(this) - 1;
 
-				canvas.append(node);
+				canvas.append(this.node);
+			}
+		}, {
+			key: "leave",
+			value: function leave(ctx) {
+				var _this2 = this;
+
+				var t = $(this.node);
+				t.removeClass(this.props.animations.enter);
+				t.addClass(this.props.animations.leave);
+
+				//After all said and done, at some point (double the duration), clean up and prevent memleaks.
+				setTimeout(function () {
+					var canvas = $("#canvas");
+					canvas.remove(t); //remove from scene
+					ctx.currentNodes.splice(_this2.nodeIndex, 1); //remove from node list
+				}, this.duration * 2);
 			}
 		}], [{
 			key: "build",

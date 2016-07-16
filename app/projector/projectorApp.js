@@ -12,10 +12,11 @@ const ipc = electron.ipcRenderer;
 	templateUrl: './projectorApp.html',
 })
 export class ProjectorApp {
+	currentNodes:Array=[]
+	currentBg:String="../../assets/bg/videos/video.mp4"
 
 	ngOnInit() {
-		this.currentNodes = []
-
+		
 		//main process says we should do something
 		ipc.on('payload', (event, payload)=> {
 			//TODO: Cleanup current scene by running through all current nodes and executing their exit methods
@@ -25,15 +26,15 @@ export class ProjectorApp {
 
 			var currentTicks = 0;
 			payload.forEach((item) => {
-				//TODO: deserialize action
-				console.log("raw:", item);
+				//deserialize streamed action
 				var action = PayloadAction.deserialize(item);
-				console.log("Action:", action);
 
-				setTimeout(()=> {
-					action.perform(this)
-				}, currentTicks);
-				currentTicks += action.nextDelay
+				if(action.canEnter(this)===true){
+					setTimeout(()=> {
+						action.enter(this);
+					}, currentTicks);
+					currentTicks += action.nextDelay
+				}
 			})
 
 		})

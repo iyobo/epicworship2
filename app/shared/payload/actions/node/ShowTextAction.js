@@ -22,13 +22,38 @@ class ShowTextAction extends PayloadAction {
 		return action;
 	}
 
-	perform(ctx) {
-		console.log("Showing Text:", this.text);
+	enter(ctx) {
+		// console.log("Showing Text:", this.text);
 		var canvas = $("#canvas");
 
-		var node = $(`<div class="node animated ${this.props.animations.entry}" style="${this.props.cssStyle} color:${this.props.color||"white"};   animation-duration: ${this.duration/1000}s; ">${this.text}</div>`);
+		this.node = $(`<div 
+			class="node animated ${this.props.animations.enter}" 
+			style="
+				${this.props.cssStyle} 
+				color:${this.props.color || "white"};   
+				animation-duration: ${this.duration / 1000}s; 
+				
+				${this.props.position}
 
-		canvas.append(node);
+				z-index: ${this.props.z}
+				
+			">${this.text}</div>`);
+		this.nodeIndex = (ctx.currentNodes.push(this)) - 1;
+
+		canvas.append(this.node);
+	}
+
+	leave(ctx) {
+		var t = $(this.node);
+		t.removeClass(this.props.animations.enter);
+		t.addClass(this.props.animations.leave);
+
+		//After all said and done, at some point (double the duration), clean up and prevent memleaks.
+		setTimeout(()=> {
+			var canvas = $("#canvas");
+			canvas.remove(t); //remove from scene
+			ctx.currentNodes.splice(this.nodeIndex, 1); //remove from node list
+		}, this.duration * 2);
 	}
 }
 
