@@ -16,10 +16,10 @@ export class ProjectorApp {
 	currentBg:String="../../assets/bg/videos/video.mp4"
 
 	ngOnInit() {
-		
+
 		//main process says we should do something
 		ipc.on('payload', (event, payload)=> {
-			//TODO: Cleanup current scene by running through all current nodes and executing their exit methods
+			//Cleanup current scene by running through all current nodes and executing their "leave" methods
 			this.currentNodes.forEach((node)=> {
 				node.leave(this)
 			});

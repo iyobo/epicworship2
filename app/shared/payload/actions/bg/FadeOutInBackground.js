@@ -29,13 +29,12 @@ class FadeOutInBackground extends PayloadAction {
 	 * @returns {number}
 	 */
 	get nextDelay() {
-		return this.duration / 2;
+		return super.duration / 2;
 	}
 
 	set nextDelay(value:number) {
 		return super.nextDelay = value;
 	}
-
 
 	canEnter(ctx) {
 		if(ctx.currentBg[0] === this.path[0])

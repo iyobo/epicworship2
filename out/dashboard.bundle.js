@@ -54178,25 +54178,37 @@
 						text: "Why do you run?\n Who are you?\nFollow the brick",
 						_duration: 600,
 						_nextDelay: 1,
-						cssStyle: "\n\t\t\t\t\t\t",
-						position: "\n\t\t\t\t\t\t\tleft: 20px;\n\t\t\t\t\t\t\ttop: 200px;\n\t\t\t\t\t\t",
+						position: [["left", 2, "vw"], ["top", 30, "%"]],
+						font: {
+							size: [5, 'vw'],
+							color: "cyan",
+							family: null,
+							style: null
+						},
+						shadow: {},
 						z: 1,
 						animations: {
 							enter: "fadeInLeft",
 							leave: "fadeOut"
-						}
+						},
+						cssOverride: "\n\t\t\t\t\t\t"
 					}), ShowTextAction.build({
 						text: new Date(),
 						_duration: 600,
 						_nextDelay: 1,
-						cssStyle: "\n\t\t\t\t\t\t",
-						color: "white",
-						position: "\n\t\t\t\t\t\t\tleft: 20px;\n\t\t\t\t\t\t\tbottom: 20px;\n\t\t\t\t\t\t",
-						z: 1,
+						position: [["left", 0, "px"], ["bottom", 5, "px"]],
+						font: {
+							size: [4, 'vh'],
+							color: null,
+							family: null,
+							style: null
+						},
+						z: 2,
 						animations: {
 							enter: "fadeIn",
 							leave: "fadeOut"
-						}
+						},
+						cssOverride: "\n\t\t\t\t\t\t"
 					})], {
 						background: path,
 						textnodes: [{
@@ -54245,6 +54257,8 @@
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _set = function set(object, property, value, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent !== null) { set(parent, property, value, receiver); } } else if ("value" in desc && desc.writable) { desc.value = value; } else { var setter = desc.set; if (setter !== undefined) { setter.call(receiver, value); } } return value; };
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
 	var _dec, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3; /**
 	                                                                                    * Created by iyobo on 2016-07-15.
@@ -54353,7 +54367,7 @@
 	   * @returns {number}
 	   */
 			get: function get() {
-				return this.duration / 2;
+				return _get(Object.getPrototypeOf(FadeOutInBackground.prototype), "duration", this) / 2;
 			},
 			set: function set(value) {
 				return _set(Object.getPrototypeOf(FadeOutInBackground.prototype), "nextDelay", value, this);
@@ -55262,7 +55276,21 @@
 				// console.log("Showing Text:", this.text);
 				var canvas = $("#canvas");
 
-				this.node = $("<div \n\t\t\tclass=\"node animated " + this.props.animations.enter + "\" \n\t\t\tstyle=\"\n\t\t\t\t" + this.props.cssStyle + " \n\t\t\t\tcolor:" + (this.props.color || "white") + ";   \n\t\t\t\tanimation-duration: " + this.duration / 1000 + "s; \n\t\t\t\t\n\t\t\t\t" + this.props.position + "\n\n\t\t\t\tz-index: " + this.props.z + "\n\t\t\t\t\n\t\t\t\">" + this.text + "</div>");
+				var position = '';
+				this.props.position.forEach(function (p) {
+					position += p[0] + ":" + p[1] + p[2] + ";";
+				});
+
+				var font = '';
+				if (this.props.font) {
+					var f = this.props.font;
+					font += f.color ? "color:" + f.color + ";" : "";
+					font += f.size ? "font-size:" + f.size[0] + f.size[1] + ";" : "";
+					font += f.family ? "font-family:" + f.family + ";" : "";
+					font += f.style ? "font-style:" + f.style + ";" : "";
+				}
+
+				this.node = $("<div \n\t\t\tclass=\"node textnode animated \n\t\t\t" + this.props.animations.enter + " \n\t\t\t" + (this.props.verticalCenter ? "center-vertical" : "") + "\n\t\t\t\" \n\t\t\tstyle=\"\n\t\t\t\t  \n\t\t\t\tanimation-duration: " + this.duration / 1000 + "s; \n\t\t\t\t\n\t\t\t\t" + position + "\n\t\t\t\t\n\t\t\t\t" + font + "\n\n\t\t\t\t" + (this.props.z ? "z-index:" + this.props.z + ";" : "") + "\n\t\t\t\t\n\t\t\t\t" + this.props.cssOverride + " \n\t\t\t\t\n\t\t\t\">" + this.text + "</div>");
 				this.nodeIndex = ctx.currentNodes.push(this) - 1;
 
 				canvas.append(this.node);

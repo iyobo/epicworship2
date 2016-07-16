@@ -26,16 +26,37 @@ class ShowTextAction extends PayloadAction {
 		// console.log("Showing Text:", this.text);
 		var canvas = $("#canvas");
 
+		var position = ''
+		this.props.position.forEach((p)=> {
+			position += p[0] + ":" + p[1] + p[2] + ";";
+		});
+		
+		var font='';
+		if(this.props.font){
+			var f=this.props.font;
+			font+=f.color? "color:"+f.color+";":"";
+			font+=f.size? "font-size:"+f.size[0]+f.size[1]+";":"";
+			font+=f.family? "font-family:"+f.family+";":"";
+			font+=f.style? "font-style:"+f.style+";":"";
+		}
+		
+
 		this.node = $(`<div 
-			class="node animated ${this.props.animations.enter}" 
+			class="node textnode animated 
+			${this.props.animations.enter} 
+			${this.props.verticalCenter ? "center-vertical" : ""}
+			" 
 			style="
-				${this.props.cssStyle} 
-				color:${this.props.color || "white"};   
+				  
 				animation-duration: ${this.duration / 1000}s; 
 				
-				${this.props.position}
+				${position}
+				
+				${font}
 
-				z-index: ${this.props.z}
+				${this.props.z ? "z-index:" + this.props.z + ";" : ""}
+				
+				${this.props.cssOverride} 
 				
 			">${this.text}</div>`);
 		this.nodeIndex = (ctx.currentNodes.push(this)) - 1;

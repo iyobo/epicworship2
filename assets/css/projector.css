@@ -22,7 +22,7 @@ video.bgvideo {
     color: White;
 
     /*font-size: 80px;*/
-    font-size: 5vw;
+
     /*font-size:calc(100% + 2.5vw);*/
     text-align: center;
 
@@ -43,23 +43,27 @@ video.bgvideo {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-#canvas div{
+#canvas .node {
     position: absolute;
 }
 
-
-#whiteout_layer {
-    background-color: white;
-    z-index: -1;
-
-    position: fixed;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    top: 50%;
-    left: 50%;
-    background-size: cover;
-
-    transform: translateX(-50%) translateY(-50%);
+#canvas .textnode {
+    font-size: 5vw;
+    padding: 2vh 2vw 2vh 2vw;
 }
+
+/*#whiteout_layer {*/
+    /*background-color: white;*/
+    /*z-index: -1;*/
+
+    /*position: fixed;*/
+    /*min-width: 100%;*/
+    /*min-height: 100%;*/
+    /*width: auto;*/
+    /*height: auto;*/
+    /*top: 50%;*/
+    /*left: 50%;*/
+    /*background-size: cover;*/
+
+    /*transform: translateX(-50%) translateY(-50%);*/
+/*}*/

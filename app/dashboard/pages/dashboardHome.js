@@ -31,34 +31,48 @@ export class DashboardHome {
 						text: "Why do you run?\n Who are you?\nFollow the brick",
 						_duration: 600,
 						_nextDelay: 1,
-						cssStyle: `
-						`,
-						position:`
-							left: 20px;
-							top: 200px;
-						`,
+						position:[
+							["left",2,"vw"],
+							["top",30,"%"]
+						],
+						font:{
+							size: [5,'vw'],
+							color: "cyan",
+							family: null,
+							style: null
+						},
+						shadow:{
+
+						},
 						z: 1,
 						animations: {
 							enter: "fadeInLeft",
 							leave: "fadeOut"
-						}
+						},
+						cssOverride: `
+						`
 					}),
 					ShowTextAction.build({
 						text: new Date(),
 						_duration: 600,
 						_nextDelay: 1,
-						cssStyle: `
-						`,
-						color: "white",
-						position:`
-							left: 20px;
-							bottom: 20px;
-						`,
-						z: 1,
+						position:[
+							["left",0,"px"],
+							["bottom",5,"px"]
+						],
+						font:{
+							size: [4,'vh'],
+							color: null,
+							family:null,
+							style:null
+						},
+						z: 2,
 						animations: {
 							enter: "fadeIn",
 							leave: "fadeOut"
-						}
+						},
+						cssOverride: `
+						`
 					})
 				],
 
