@@ -45,7 +45,7 @@ class ShowTextAction extends PayloadAction {
 		let durationCSS='animation-duration:'+this.duration / 1000+"s;";
 
 		//Layer
-		let layerCSS= this.props.layer != undefined ? "z-index:" + this.props.z + ";" : "1;"
+		let layerCSS= this.props.layer != undefined ? "z-index:" + this.props.layer + ";" : "1;"
 		
 
 		this.node = $(`<div 
@@ -62,7 +62,7 @@ class ShowTextAction extends PayloadAction {
 
 				${layerCSS}
 				
-				${this.props.cssOverride} 
+				${this.props.cssOverride?this.props.cssOverride:""} 
 				
 			">${this.text}</div>`);
 		this.nodeIndex = (ctx.currentNodes.push(this)) - 1;
@@ -71,16 +71,17 @@ class ShowTextAction extends PayloadAction {
 	}
 
 	leave(ctx) {
-		var t = $(this.node);
+		let canvas = $("#canvas");
+		let t = $(this.node);
 		t.removeClass(this.props.animations.enter);
 		t.addClass(this.props.animations.leave);
 
-		//After all said and done, at some point (double the duration), clean up and prevent memleaks.
+		//After all said and done, at some point (double the duration), clean up this action/node and prevent memleaks.
 		setTimeout(()=> {
-			var canvas = $("#canvas");
+			console.log('cleaning up...');
 			canvas.remove(t); //remove from scene
 			ctx.currentNodes.splice(this.nodeIndex, 1); //remove from node list
-		}, this.duration * 2);
+		}, this.duration * 5);
 	}
 }
 

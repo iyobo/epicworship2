@@ -50388,9 +50388,9 @@
 				var durationCSS = 'animation-duration:' + this.duration / 1000 + "s;";
 
 				//Layer
-				var layerCSS = this.props.layer != undefined ? "z-index:" + this.props.z + ";" : "1;";
+				var layerCSS = this.props.layer != undefined ? "z-index:" + this.props.layer + ";" : "1;";
 
-				this.node = $("<div \n\t\t\tclass=\"node textnode animated \n\t\t\t" + this.props.animations.enter + " \n\t\t\t\" \n\t\t\tstyle=\"\n\t\t\t\t  \n\t\t\t\t" + durationCSS + " \n\t\t\t\t\n\t\t\t\t" + positionCss + "\n\t\t\t\t\n\t\t\t\t" + fontCSS + "\n\n\t\t\t\t" + layerCSS + "\n\t\t\t\t\n\t\t\t\t" + this.props.cssOverride + " \n\t\t\t\t\n\t\t\t\">" + this.text + "</div>");
+				this.node = $("<div \n\t\t\tclass=\"node textnode animated \n\t\t\t" + this.props.animations.enter + " \n\t\t\t\" \n\t\t\tstyle=\"\n\t\t\t\t  \n\t\t\t\t" + durationCSS + " \n\t\t\t\t\n\t\t\t\t" + positionCss + "\n\t\t\t\t\n\t\t\t\t" + fontCSS + "\n\n\t\t\t\t" + layerCSS + "\n\t\t\t\t\n\t\t\t\t" + (this.props.cssOverride ? this.props.cssOverride : "") + " \n\t\t\t\t\n\t\t\t\">" + this.text + "</div>");
 				this.nodeIndex = ctx.currentNodes.push(this) - 1;
 
 				canvas.append(this.node);
@@ -50400,16 +50400,17 @@
 			value: function leave(ctx) {
 				var _this2 = this;
 
+				var canvas = $("#canvas");
 				var t = $(this.node);
 				t.removeClass(this.props.animations.enter);
 				t.addClass(this.props.animations.leave);
 
-				//After all said and done, at some point (double the duration), clean up and prevent memleaks.
+				//After all said and done, at some point (double the duration), clean up this action/node and prevent memleaks.
 				setTimeout(function () {
-					var canvas = $("#canvas");
+					console.log('cleaning up...');
 					canvas.remove(t); //remove from scene
 					ctx.currentNodes.splice(_this2.nodeIndex, 1); //remove from node list
-				}, this.duration * 2);
+				}, this.duration * 5);
 			}
 		}], [{
 			key: "build",
