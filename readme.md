@@ -1,12 +1,14 @@
-EpicWorship 2
+# EpicWorship 2
 
-*Dev Requirements*
-- Nodejs/npm
-- Electron
+Lighter, Faster, Greater.
 
-*Initial setup*
+### Dev Requirements
+- NodeJS/npm
+
+### Initial setup
 - Run `sudo . setup.sh`
 
-*Development/ Hot-compile*
-- run `. dev.sh` to launch webpack on watch mode so you don't have to actively compile everytime you make a change.
-- You can use `command + r` to refresh a window
+### Development/ Hot-compile*
+- run `. dev.sh` to launch webpack on watch mode so you don't have to actively compile bundles everytime you make a change.
+- You can use `command + r` to refresh an Electron window while making cosmetic changes.
+
