@@ -19,13 +19,30 @@ export class ProjectorApp {
 
 		//main process says we should do something
 		ipc.on('payload', (event, payload)=> {
+
+			/**
+			 * First, in EpicWorship tradition,
+			 * we have always started blending in the background first before changing text.
+			*/
+			var currentTicks = 0;
+			if(payload.background){
+				var action = PayloadAction.deserialize(payload.background);
+
+				if(action.canEnter(this)===true){
+					action.enter(this);
+					currentTicks += action.nextDelay
+				}
+			}
+
 			//Cleanup current scene by running through all current nodes and executing their "leave" methods
 			this.currentNodes.forEach((node)=> {
-				node.leave(this)
+				setTimeout(()=> {
+					node.leave(this)
+				}, currentTicks);
 			});
 
-			var currentTicks = 0;
-			payload.forEach((item) => {
+
+			payload.scene.forEach((item) => {
 				//deserialize streamed action
 				var action = PayloadAction.deserialize(item);
 

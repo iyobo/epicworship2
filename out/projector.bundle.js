@@ -86,13 +86,29 @@
 
 				//main process says we should do something
 				ipc.on('payload', function (event, payload) {
+
+					/**
+	     * First, in EpicWorship tradition,
+	     * we have always started blending in the background first before changing text.
+	    */
+					var currentTicks = 0;
+					if (payload.background) {
+						var action = _PayloadAction.PayloadAction.deserialize(payload.background);
+
+						if (action.canEnter(_this) === true) {
+							action.enter(_this);
+							currentTicks += action.nextDelay;
+						}
+					}
+
 					//Cleanup current scene by running through all current nodes and executing their "leave" methods
 					_this.currentNodes.forEach(function (node) {
-						node.leave(_this);
+						setTimeout(function () {
+							node.leave(_this);
+						}, currentTicks);
 					});
 
-					var currentTicks = 0;
-					payload.forEach(function (item) {
+					payload.scene.forEach(function (item) {
 						//deserialize streamed action
 						var action = _PayloadAction.PayloadAction.deserialize(item);
 

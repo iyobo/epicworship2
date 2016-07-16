@@ -54174,42 +54174,45 @@
 					//TODO: Usually we want to just add the path to something
 
 					//Let's send it to the projector
-					ipc.send("toProjector", "main", [new FadeOutInBackground(path, 2000), ShowTextAction.build({
-						text: "Why do you run?\n Who are you?\nFollow the brick",
-						_duration: 600,
-						_nextDelay: 1,
-						position: [["left", 2, "vw"], ["top", 30, "%"]],
-						font: {
-							size: [5, 'vw'],
-							color: "white",
-							family: null,
-							style: null
-						},
-						shadow: {},
-						layer: 1,
-						animations: {
-							enter: "fadeInLeft",
-							leave: "fadeOut"
-						},
-						cssOverride: "\n\t\t\t\t\t\t"
-					}), ShowTextAction.build({
-						text: new Date(),
-						_duration: 600,
-						_nextDelay: 1,
-						position: [["left", 0, "px"], ["bottom", 5, "px"]],
-						font: {
-							size: [3, 'vh'],
-							color: null,
-							family: null,
-							style: null
-						},
-						layer: 2,
-						animations: {
-							enter: "fadeIn",
-							leave: "fadeOut"
-						},
-						cssOverride: "\n\t\t\t\t\t\t"
-					})], {
+					ipc.send("toProjector", "main", {
+						background: new FadeOutInBackground(path, 2000),
+						scene: [ShowTextAction.build({
+							text: "Why do you run?\n Who are you?\nFollow the brick",
+							_duration: 600,
+							_nextDelay: 1,
+							position: [["left", 2, "vw"], ["top", 30, "%"]],
+							font: {
+								size: [5, 'vw'],
+								color: "white",
+								family: null,
+								style: null
+							},
+							shadow: {},
+							layer: 1,
+							animations: {
+								enter: "fadeInLeft",
+								leave: "fadeOut"
+							},
+							cssOverride: "\n\t\t\t\t\t\t"
+						}), ShowTextAction.build({
+							text: new Date(),
+							_duration: 600,
+							_nextDelay: 1,
+							position: [["left", 0, "px"], ["bottom", 5, "px"]],
+							font: {
+								size: [3, 'vh'],
+								color: null,
+								family: null,
+								style: null
+							},
+							layer: 2,
+							animations: {
+								enter: "fadeIn",
+								leave: "fadeOut"
+							},
+							cssOverride: "\n\t\t\t\t\t\t"
+						})]
+					}, {
 						background: path,
 						textnodes: [{
 							type: "text",
