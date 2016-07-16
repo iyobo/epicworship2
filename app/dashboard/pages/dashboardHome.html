@@ -1,4 +1,52 @@
+<h2>EpicWorship 2 ElectronJS Tech Demo</h2>
+<p>
+	The purpose of this simple tech demo is to show the current progress of migrating the EpicWorship Project from
+	old, slow Java/JavaFX to lightning-fast ElectronJS!
+</p>
+<p>EpicWorship 2 will be lighter, faster, and much more flexible than Version 1 thanks to it being fully built using 100%
+	HTML5/CSS3/Javascript.</p>
 
-<h3>dashboard {{foo}}</h3>
+<hr/>
+<h3>Test: Song Page</h3>
+<div>
+	<div class="row">
+		<div class="six columns">
+			<label for="title">Song Page Title</label>
+			<input class="u-full-width" type="text" id="title" placeholder="Title" [(ngModel)]="title">
+		</div>
+		<div class="six columns">
+		</div>
+	</div>
 
-<a href="#" (click)="chooseBackground()">Open File with IPC</a>
+	<label for="songbody">Song Page Body</label>
+	<textarea class="u-full-width" placeholder="No new-line spltting as of yet" id="songbody"
+			  [(ngModel)]="text"></textarea>
+
+	<label>Optionally choose background</label>
+	<a href="#" class="button" (click)="chooseBackground()">Choose Background</a>
+	<p>
+		Selected Video Background: <b><span>{{videoPath}}</span></b>
+	</p>
+	<input class="button-primary" type="button" value="Project" (click)="projectPage()">
+	<hr/>
+
+
+	<h3>Projectors!</h3>
+	<p>With EpicWorship 2 You will also be able to <b>launch as many projectors as you want</b> and you can project
+		to one or all of them. E.g. I launched a couple for you already (Auditorium and Hallway). Which do you want to project to?</p>
+	<label>Active Projector</label>
+	<select id="activeProjector" [(ngModel)]="activeProjector">
+		<option value="">All</option>
+		<option value="Auditorium">Auditorium</option>
+		<option value="Hallway">Hallway</option>
+	</select>
+
+	<input class="button-primary" type="button" value="Project" (click)="projectPage()">
+</div>
+<hr/>
+
+<h4>Why are you spawning each projector as a seperate process?</h4>
+<p>ElectronJS has a noticeable pause when doing things like opening dashboard dialogs, file-pickers, etc. (More details
+	on this bug <a href="https://github.com/electron/electron/issues/5081">here</a>)</p>
+<p>In the world of professional live-audience projection, you can't have small pauses like that glitching up your
+	live-presentations and videos while you are arranging things in the backend dashboard.</p>

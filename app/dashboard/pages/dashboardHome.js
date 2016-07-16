@@ -1,7 +1,7 @@
 /**
  * Created by iyobo on 6/30/16.
  */
-import {Component} from '@angular/core';
+import {Component,ChangeDetectorRef} from '@angular/core';
 const FadeOutInBackground = require("../../shared/payload/actions/bg/FadeOutInBackground")
 const ShowTextAction = require("../../shared/payload/actions/node/ShowTextAction")
 
@@ -12,8 +12,14 @@ const ipc = electron.ipcRenderer;
 	templateUrl: 'pages/dashboardHome.html'
 })
 export class DashboardHome {
-	constructor() {
-		this.foo = "bar";
+
+	videoPath:String;
+	title:String = "Harking Stuff";
+	text:String = "Hark the Herald Angels sing,\nGlory to the new born King!";
+	activeProjector:String="";
+
+	constructor(ref: ChangeDetectorRef){
+		this.ref= ref;
 	}
 
 	ngOnInit() {
@@ -22,87 +28,11 @@ export class DashboardHome {
 		//ipc callbacks
 		ipc.on('dashhome:chooseBackground', (event, path)=> {
 			console.log(`Selected: ${path}`);
-			//TODO: Usually we want to just add the path to something
-
-			//Let's send it to the projector
-			ipc.send("toProjector", "main", {
-					background: new FadeOutInBackground(path, 2000),
-					scene: [
-						ShowTextAction.build({
-							text: "Why do you run?\n Who are you?\nFollow the brick",
-							_duration: 600,
-							_nextDelay: 1,
-							position: [
-								["left", 2, "vw"],
-								["top", 30, "%"]
-							],
-							font: {
-								size: [5, 'vw'],
-								color: "white",
-								family: null,
-								style: null
-							},
-							shadow: {},
-							layer: 1,
-							animations: {
-								enter: "fadeInLeft",
-								leave: "fadeOut"
-							},
-							cssOverride: `
-						`
-						}),
-						ShowTextAction.build({
-							text: new Date(),
-							_duration: 600,
-							_nextDelay: 1,
-							position: [
-								["left", 0, "px"],
-								["bottom", 5, "px"]
-							],
-							font: {
-								size: [3, 'vh'],
-								color: null,
-								family: null,
-								style: null
-							},
-							layer: 2,
-							animations: {
-								enter: "fadeIn",
-								leave: "fadeOut"
-							},
-							cssOverride: `
-						`
-						})
-					]
-				},
-
-
-				{
-					background: path,
-					textnodes: [
-						{
-							type: "text",
-							position: [0, 0, 1],
-							cssStyle: "font-size: 30px;",
-							text: "Body Text Hallo \n Hallo " + new Date(),
-							animations: {
-								entry: "fadein",
-								exit: "fadeout"
-							}
-						},
-						{
-							type: "text",
-							position: [0, 10, 1],
-							cssStyle: "font-size: 14px;",
-							text: "title! " + new Date(),
-							animations: {
-								entry: "fadein",
-								exit: "fadeout"
-							}
-						}
-					]
-				})
-		})
+			//TODO: Verify media file and let user know if we can't use this
+			this.videoPath = path[0];
+			this.ref.detectChanges();
+		});
+		
 	}
 
 	chooseBackground() {
@@ -112,5 +42,65 @@ export class DashboardHome {
 			title: "Choose a background...",
 			properties: ['openFile']
 		});
+	}
+
+	launchProjector(){
+		ipc.send('launchProjector', {
+			returnChannel: "dashhome:launchProjector"
+		});
+	}
+
+	projectPage() {
+		//Let's send it to the projector
+		ipc.send("toProjector",this.activeProjector, {
+			background: new FadeOutInBackground(this.videoPath, 2000),
+			scene: [
+				ShowTextAction.build({
+					text: this.text,
+					_duration: 600,
+					_nextDelay: 1,
+					position: [
+						["left", 2, "vw"],
+						["top", 30, "%"]
+					],
+					font: {
+						size: [5, 'vw'],
+						color: "white",
+						family: null,
+						style: null
+					},
+					shadow: {},
+					layer: 1,
+					animations: {
+						enter: "fadeInLeft",
+						leave: "fadeOut"
+					},
+					cssOverride: `
+						`
+				}),
+				ShowTextAction.build({
+					text: this.title,
+					_duration: 600,
+					_nextDelay: 1,
+					position: [
+						["left", 0, "px"],
+						["bottom", 5, "px"]
+					],
+					font: {
+						size: [3, 'vh'],
+						color: null,
+						family: null,
+						style: null
+					},
+					layer: 2,
+					animations: {
+						enter: "fadeIn",
+						leave: "fadeOut"
+					},
+					cssOverride: `
+						`
+				})
+			]
+		})
 	}
 }

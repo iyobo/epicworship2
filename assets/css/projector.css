@@ -39,7 +39,7 @@ video.bgvideo {
     text-shadow: #000 0px 0px 10px, #000 0px 0px 30px, #000 0px 0px 50px, #000 0px 0px 70px;
 
     z-index: 5;
-    /*white-space: pre;*/
+
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -50,6 +50,7 @@ video.bgvideo {
 #canvas .textnode {
     font-size: 5vw;
     padding: 2vh 2vw 2vh 2vw;
+    white-space: pre;
 }
 
 /*#whiteout_layer {*/

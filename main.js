@@ -14,7 +14,7 @@ var projectors = {};
 
 app.on("ready", function () {
 
-	dashboard = new BrowserWindow({width: 600, height: 800});
+	dashboard = new BrowserWindow({width: 800, height: 600, x: 0, y: 0});
 	dashboard.loadURL("file://" + process.cwd() + "/app/dashboard/_dashboardBase.html");
 	dashboard.on('closed', function () {
 		//on dashboard closing, close all projectors
@@ -26,8 +26,8 @@ app.on("ready", function () {
 	});
 
 	setupIPCActions();
-	createAsyncProjector("main");
-	// createAsyncProjector("overflow");
+	createAsyncProjector("Auditorium",{x:300, y:100});
+	createAsyncProjector("Hallway",{x:500,y:300});
 
 });
 
@@ -53,17 +53,17 @@ function setupIPCActions() {
 	/**
 	 * Sends payload to projector of given name
 	 */
-	ipc.on('toProjector', function (...args) {
+	ipc.on('toProjector', function (event, projectorName, payload) {
 
-		if (args.length == 2) {
-			//push to all projectors
+		if (projectorName === null || projectorName === "") {
+			//If no projector name defined, push to all projectors
 			for (var name in projectors) {
-				projectors[name].stdin.write(cerial.Serialize(args[1]));
+				projectors[name].stdin.write(cerial.Serialize(JSON.stringify(payload)));
 			}
 		}
-		else if (args.length > 2) {
+		else {
 			//push to one projector
-			projectors[args[1]].stdin.write(cerial.Serialize(JSON.stringify(args[2])));
+			projectors[projectorName].stdin.write(cerial.Serialize(JSON.stringify(payload)));
 		}
 
 
@@ -75,8 +75,16 @@ function setupIPCActions() {
  * Create an Asynchronous presenter and returns the created process.
  * @returns {ChildProcess}
  */
-function createAsyncProjector(name) {
-	var projector = require('child_process').spawn(electronBin, ['mainprojector', name]);
+function createAsyncProjector(name,options) {
+
+	var cliArray = ['mainprojector','--title', name];
+	for(let k in options){
+		cliArray.push('--'+k);
+		cliArray.push(options[k]);
+	}
+	// console.log(cliArray)
+
+	var projector = require('child_process').spawn(electronBin, cliArray);
 	projectors[name] = projector;
 
 	//received data from presenter

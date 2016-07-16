@@ -37,7 +37,7 @@ class FadeOutInBackground extends PayloadAction {
 	}
 
 	canEnter(ctx) {
-		if(ctx.currentBg[0] === this.path[0])
+		if(ctx.currentBg === this.path)
 			return false; //No need changing bg if it is already active.
 		else
 			return true;

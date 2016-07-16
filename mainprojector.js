@@ -6,11 +6,35 @@ const app = electron.app
 const BrowserWindow = electron.BrowserWindow;
 const ipc = electron.ipcMain;
 
+const commandLineArgs = require('command-line-args')
+const optionDefinitions = [
+	{name: 'x', alias: 'x', type: Number},
+	{name: 'y', alias: 'y', type: Number},
+	{name: 'width', alias: 'w', type: Number},
+	{name: 'height', alias: 'h', type: Number},
+	{name: 'title', alias: 't', type: String}
+]
+const cliArgs = commandLineArgs(optionDefinitions)
+
+// console.log(process.argv);
+// console.log(cliArgs);
 
 app.on("ready", function () {
 
-	projector = new BrowserWindow({width: 600, height: 800});
-	projector.loadURL("file://"+process.cwd()+"/app/projector/_projectorBase.html");
+	let windowOptions={
+		width: cliArgs.width || 800,
+		height: cliArgs.height || 600,
+		title: cliArgs.title
+	};
+
+	if(cliArgs.x!==undefined)
+		windowOptions['x']=cliArgs.x;
+
+	if(cliArgs.y!==undefined)
+		windowOptions['y']=cliArgs.y;
+
+	var projector = new BrowserWindow(windowOptions);
+	projector.loadURL("file://" + process.cwd() + "/app/projector/_projectorBase.html");
 
 	// Unpause the stdin stream:
 	process.stdin.resume();
@@ -19,7 +43,7 @@ app.on("ready", function () {
 	process.stdin.on('data', function (data) {
 		console.log('Projector Received Command: ' + data);
 
-		projector.webContents.send("payload",JSON.parse(data));
+		projector.webContents.send("payload", JSON.parse(data));
 
 	});
 });
