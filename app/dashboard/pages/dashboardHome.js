@@ -28,9 +28,20 @@ export class DashboardHome {
 			ipc.send("toProjector","main",[
 				new FadeOutInBackground(path, 2000),
 				ShowTextAction.build({
-					text: "Why do you run?",
+					text: "Why do you run?\n Who are you?\nFollow the brick",
 					_duration: 800,
-					_nextDelay: 300
+					_nextDelay: 300,
+					cssStyle: `
+						color: blue;
+					`
+				}),
+				ShowTextAction.build({
+					text: "Title of this Party",
+					_duration: 800,
+					_nextDelay: 300,
+					cssStyle: `
+						color: yellow;
+					`
 				})
 			],{
 				background: path,

@@ -1,10 +1,10 @@
 /* CSS file placeholder. */
 
-body{
-  background-color: white;
+body {
+    background-color: white;
 }
 
-video.bgvideo { 
+video.bgvideo {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -18,43 +18,46 @@ video.bgvideo {
     -webkit-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
     background-color: white;
-    background-size: cover; 
+    background-size: cover;
 }
 
-#canvas{
-  color: White;
-  
-  /*font-size: 80px;*/
-  font-size: 5vw;
-  /*font-size:calc(100% + 2.5vw);*/
-  text-align: center;
-  
-  width: 90%;
-  
-  /*margin: 50px;*/
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  /* bring your own prefixes */
-  transform: translate(-50%, -50%);
-  
-  text-shadow: #000 0px 0px 10px,#000 0px 0px 30px,#000 0px 0px 50px,#000 0px 0px 70px;
-  
-  z-index: 5;
+#canvas {
+    color: White;
+
+    /*font-size: 80px;*/
+    font-size: 5vw;
+    /*font-size:calc(100% + 2.5vw);*/
+    text-align: center;
+
+    width: 90%;
+
+    /*margin: 50px;*/
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+
+    text-shadow: #000 0px 0px 10px, #000 0px 0px 30px, #000 0px 0px 50px, #000 0px 0px 70px;
+
+    z-index: 5;
+    white-space: pre;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-#whiteout_layer{
-  background-color: white;
-  z-index: -1;
-  
-  position: fixed;
-  min-width: 100%;
+
+#whiteout_layer {
+    background-color: white;
+    z-index: -1;
+
+    position: fixed;
+    min-width: 100%;
     min-height: 100%;
     width: auto;
     height: auto;
     top: 50%;
     left: 50%;
-    background-size: cover; 
+    background-size: cover;
     -ms-transform: translateX(-50%) translateY(-50%);
     -moz-transform: translateX(-50%) translateY(-50%);
     -webkit-transform: translateX(-50%) translateY(-50%);

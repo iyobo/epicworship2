@@ -10,6 +10,7 @@ export class PayloadAction{
 	_nextDelay: Number = 1000;
 	_group:String="notset";
 	_type:String="notset";
+	
 
 	constructor(duration:Number) {
 		this._duration = duration;

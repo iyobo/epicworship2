@@ -54175,9 +54175,15 @@
 
 					//Let's send it to the projector
 					ipc.send("toProjector", "main", [new FadeOutInBackground(path, 2000), ShowTextAction.build({
-						text: "Why do you run?",
+						text: "Why do you run?\n Who are you?\nFollow the brick",
 						_duration: 800,
-						_nextDelay: 300
+						_nextDelay: 300,
+						cssStyle: "\n\t\t\t\t\t\tcolor: blue;\n\t\t\t\t\t"
+					}), ShowTextAction.build({
+						text: "Title of this Party",
+						_duration: 800,
+						_nextDelay: 300,
+						cssStyle: "\n\t\t\t\t\t\tcolor: yellow;\n\t\t\t\t\t"
 					})], {
 						background: path,
 						textnodes: [{
@@ -54437,12 +54443,16 @@
 			key: "perform",
 			value: function perform(ctx) {
 				console.log("Showing Text:", this.text);
+				var canvas = $("#canvas");
+
+				canvas.html(this.text);
 			}
 		}], [{
 			key: "build",
 			value: function build(data) {
 				var action = new ShowTextAction(data.text || "", data._duration || data.duration || 500);
 				action.nextDelay = data._nextDelay || data.nextDelay || data._duration || data.duration || 500;
+
 				return action;
 			}
 		}]);

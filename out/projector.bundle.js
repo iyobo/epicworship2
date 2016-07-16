@@ -49562,12 +49562,16 @@
 			key: "perform",
 			value: function perform(ctx) {
 				console.log("Showing Text:", this.text);
+				var canvas = $("#canvas");
+
+				canvas.html(this.text);
 			}
 		}], [{
 			key: "build",
 			value: function build(data) {
 				var action = new ShowTextAction(data.text || "", data._duration || data.duration || 500);
 				action.nextDelay = data._nextDelay || data.nextDelay || data._duration || data.duration || 500;
+
 				return action;
 			}
 		}]);
