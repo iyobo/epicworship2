@@ -37,14 +37,14 @@ export class DashboardHome {
 						],
 						font:{
 							size: [5,'vw'],
-							color: "cyan",
+							color: "white",
 							family: null,
 							style: null
 						},
 						shadow:{
 
 						},
-						z: 1,
+						layer: 1,
 						animations: {
 							enter: "fadeInLeft",
 							leave: "fadeOut"
@@ -61,12 +61,12 @@ export class DashboardHome {
 							["bottom",5,"px"]
 						],
 						font:{
-							size: [4,'vh'],
+							size: [3,'vh'],
 							color: null,
 							family:null,
 							style:null
 						},
-						z: 2,
+						layer: 2,
 						animations: {
 							enter: "fadeIn",
 							leave: "fadeOut"

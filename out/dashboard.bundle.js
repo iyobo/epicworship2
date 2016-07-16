@@ -54181,12 +54181,12 @@
 						position: [["left", 2, "vw"], ["top", 30, "%"]],
 						font: {
 							size: [5, 'vw'],
-							color: "cyan",
+							color: "white",
 							family: null,
 							style: null
 						},
 						shadow: {},
-						z: 1,
+						layer: 1,
 						animations: {
 							enter: "fadeInLeft",
 							leave: "fadeOut"
@@ -54198,12 +54198,12 @@
 						_nextDelay: 1,
 						position: [["left", 0, "px"], ["bottom", 5, "px"]],
 						font: {
-							size: [4, 'vh'],
+							size: [3, 'vh'],
 							color: null,
 							family: null,
 							style: null
 						},
-						z: 2,
+						layer: 2,
 						animations: {
 							enter: "fadeIn",
 							leave: "fadeOut"
@@ -55273,24 +55273,31 @@
 		_createClass(ShowTextAction, [{
 			key: "enter",
 			value: function enter(ctx) {
-				// console.log("Showing Text:", this.text);
 				var canvas = $("#canvas");
 
-				var position = '';
+				//Position
+				var positionCss = '';
 				this.props.position.forEach(function (p) {
-					position += p[0] + ":" + p[1] + p[2] + ";";
+					positionCss += p[0] + ":" + p[1] + p[2] + ";";
 				});
 
-				var font = '';
+				//Font
+				var fontCSS = '';
 				if (this.props.font) {
 					var f = this.props.font;
-					font += f.color ? "color:" + f.color + ";" : "";
-					font += f.size ? "font-size:" + f.size[0] + f.size[1] + ";" : "";
-					font += f.family ? "font-family:" + f.family + ";" : "";
-					font += f.style ? "font-style:" + f.style + ";" : "";
+					fontCSS += f.color ? "color:" + f.color + ";" : "";
+					fontCSS += f.size ? "font-size:" + f.size[0] + f.size[1] + ";" : "";
+					fontCSS += f.family ? "font-family:" + f.family + ";" : "";
+					fontCSS += f.style ? "font-style:" + f.style + ";" : "";
 				}
 
-				this.node = $("<div \n\t\t\tclass=\"node textnode animated \n\t\t\t" + this.props.animations.enter + " \n\t\t\t" + (this.props.verticalCenter ? "center-vertical" : "") + "\n\t\t\t\" \n\t\t\tstyle=\"\n\t\t\t\t  \n\t\t\t\tanimation-duration: " + this.duration / 1000 + "s; \n\t\t\t\t\n\t\t\t\t" + position + "\n\t\t\t\t\n\t\t\t\t" + font + "\n\n\t\t\t\t" + (this.props.z ? "z-index:" + this.props.z + ";" : "") + "\n\t\t\t\t\n\t\t\t\t" + this.props.cssOverride + " \n\t\t\t\t\n\t\t\t\">" + this.text + "</div>");
+				//Duration
+				var durationCSS = 'animation-duration:' + this.duration / 1000 + "s;";
+
+				//Layer
+				var layerCSS = this.props.layer != undefined ? "z-index:" + this.props.z + ";" : "1;";
+
+				this.node = $("<div \n\t\t\tclass=\"node textnode animated \n\t\t\t" + this.props.animations.enter + " \n\t\t\t\" \n\t\t\tstyle=\"\n\t\t\t\t  \n\t\t\t\t" + durationCSS + " \n\t\t\t\t\n\t\t\t\t" + positionCss + "\n\t\t\t\t\n\t\t\t\t" + fontCSS + "\n\n\t\t\t\t" + layerCSS + "\n\t\t\t\t\n\t\t\t\t" + this.props.cssOverride + " \n\t\t\t\t\n\t\t\t\">" + this.text + "</div>");
 				this.nodeIndex = ctx.currentNodes.push(this) - 1;
 
 				canvas.append(this.node);

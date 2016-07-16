@@ -23,38 +23,44 @@ class ShowTextAction extends PayloadAction {
 	}
 
 	enter(ctx) {
-		// console.log("Showing Text:", this.text);
-		var canvas = $("#canvas");
+		let canvas = $("#canvas");
 
-		var position = ''
+		//Position
+		let positionCss = ''
 		this.props.position.forEach((p)=> {
-			position += p[0] + ":" + p[1] + p[2] + ";";
+			positionCss += p[0] + ":" + p[1] + p[2] + ";";
 		});
-		
-		var font='';
+
+		//Font
+		let fontCSS='';
 		if(this.props.font){
 			var f=this.props.font;
-			font+=f.color? "color:"+f.color+";":"";
-			font+=f.size? "font-size:"+f.size[0]+f.size[1]+";":"";
-			font+=f.family? "font-family:"+f.family+";":"";
-			font+=f.style? "font-style:"+f.style+";":"";
+			fontCSS+=f.color? "color:"+f.color+";":"";
+			fontCSS+=f.size? "font-size:"+f.size[0]+f.size[1]+";":"";
+			fontCSS+=f.family? "font-family:"+f.family+";":"";
+			fontCSS+=f.style? "font-style:"+f.style+";":"";
 		}
+
+		//Duration
+		let durationCSS='animation-duration:'+this.duration / 1000+"s;";
+
+		//Layer
+		let layerCSS= this.props.layer != undefined ? "z-index:" + this.props.z + ";" : "1;"
 		
 
 		this.node = $(`<div 
 			class="node textnode animated 
 			${this.props.animations.enter} 
-			${this.props.verticalCenter ? "center-vertical" : ""}
 			" 
 			style="
 				  
-				animation-duration: ${this.duration / 1000}s; 
+				${durationCSS} 
 				
-				${position}
+				${positionCss}
 				
-				${font}
+				${fontCSS}
 
-				${this.props.z ? "z-index:" + this.props.z + ";" : ""}
+				${layerCSS}
 				
 				${this.props.cssOverride} 
 				
