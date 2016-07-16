@@ -11,6 +11,7 @@ export class PayloadAction {
 	@autoserialize _nextDelay:Number = 1000;
 	@autoserialize _group:String = "notset";
 	@autoserialize _type:String = "notset";
+	@autoserialize props:any;
 
 	constructor(duration:Number) {
 		this._duration = duration;

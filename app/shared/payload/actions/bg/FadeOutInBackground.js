@@ -19,33 +19,30 @@ class FadeOutInBackground extends PayloadAction {
 	}
 
 	static build(data) {
-		return new FadeOutInBackground(data.path || "", data._duration || data.duration || 1000);
+		var obj= new FadeOutInBackground(data.path || "", data._duration || data.duration || 1000);
+		obj.props=data;
+		return obj;
 	}
 
 	/**
 	 * We want other actions to continue processing halfway through this background-changing action
 	 * @returns {number}
 	 */
-
 	get nextDelay() {
 		return this.duration / 2;
 	}
-
 
 	set nextDelay(value:number) {
 		return super.nextDelay = value;
 	}
 
 	perform(ctx) {
-		console.log("changing Background...");
 		var vid = $("#bgvid");
 		$('#bgvid source').attr('src', this.path);
 
 		vid.addClass('animated fadeOut');
 		vid.one('animationend', function () {
-
 			vid[0].load();
-			// txt.text('We Worship you Hallelujah Hallejujah');
 			vid.removeClass('fadeOut');
 			vid.addClass('fadeIn');
 		});

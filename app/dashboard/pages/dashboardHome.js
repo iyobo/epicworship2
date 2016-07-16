@@ -20,54 +20,63 @@ export class DashboardHome {
 		console.log('loaded');
 
 		//ipc callbacks
-		ipc.on('dashhome:chooseBackground', function (event, path) {
+		ipc.on('dashhome:chooseBackground', (event, path)=> {
 			console.log(`Selected: ${path}`);
 			//TODO: Usually we want to just add the path to something
 
 			//Let's send it to the projector
-			ipc.send("toProjector","main",[
-				new FadeOutInBackground(path, 2000),
-				ShowTextAction.build({
-					text: "Why do you run?\n Who are you?\nFollow the brick",
-					_duration: 800,
-					_nextDelay: 300,
-					cssStyle: `
-						color: blue;
-					`
-				}),
-				ShowTextAction.build({
-					text: "Title of this Party",
-					_duration: 800,
-					_nextDelay: 300,
-					cssStyle: `
-						color: yellow;
-					`
+			ipc.send("toProjector", "main", [
+					new FadeOutInBackground(path, 2000),
+					ShowTextAction.build({
+						text: "Why do you run?\n Who are you?\nFollow the brick",
+						_duration: 600,
+						_nextDelay: 300,
+						cssStyle: `
+						`,
+						animations: {
+							entry: "fadeInLeft",
+							exit: "fadeOutRight"
+						}
+					}),
+					ShowTextAction.build({
+						text: "Title of this Party",
+						_duration: 600,
+						_nextDelay: 300,
+						cssStyle: `
+						`,
+						animations: {
+							entry: "fadeInLeft",
+							exit: "fadeOutRight"
+						}
+					})
+				],
+
+
+				{
+					background: path,
+					textnodes: [
+						{
+							type: "text",
+							position: [0, 0, 1],
+							cssStyle: "font-size: 30px;",
+							text: "Body Text Hallo \n Hallo " + new Date(),
+							animations: {
+								entry: "fadein",
+								exit: "fadeout"
+							}
+						},
+						{
+							type: "text",
+							position: [0, 10, 1],
+							cssStyle: "font-size: 14px;",
+							text: "title! " + new Date(),
+							animations: {
+								entry: "fadein",
+								exit: "fadeout"
+							}
+						}
+					]
 				})
-			],{
-				background: path,
-				textnodes:[
-					{
-						type: "text",
-						position: [0,0,1],
-						cssStyle: "font-size: 30px;",
-						text: "Body Text Hallo \n Hallo "+new Date(),
-						animations:{
-							entry: "fadein",
-							exit: "fadeout"
-						}
-					},
-					{
-						type: "text",
-						position: [0,10,1],
-						cssStyle: "font-size: 14px;",
-						text: "title! "+new Date(),
-						animations:{
-							entry: "fadein",
-							exit: "fadeout"
-						}
-					}
-				]
-			})
 		})
 	}
 
@@ -76,7 +85,7 @@ export class DashboardHome {
 		ipc.send('chooseFile', {
 			returnChannel: "dashhome:chooseBackground",
 			title: "Choose a background...",
-			properties:['openFile']
+			properties: ['openFile']
 		});
 	}
 }
