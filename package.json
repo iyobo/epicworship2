@@ -14,7 +14,7 @@
     "webpack": "^1.13.1"
   },
   "scripts": {
-    "start": "electron app/main.js"
+    "start": "electron main.js"
   },
   "dependencies": {
     "@angular/common": "2.0.0-rc.4",
