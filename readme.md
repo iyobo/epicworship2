@@ -1,6 +1,7 @@
 # EpicWorship 2
 
 Lighter, Faster, Greater.
+
 Migrating [EpicWorship v1](https://github.com/iyobo/epicworship) from Java to a fully-loaded ElectronJS/Angular 2 Desktop app.
 
 ### Dev Requirements
