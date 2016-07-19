@@ -14,7 +14,7 @@ var projectors = {};
 
 app.on("ready", function () {
 
-	dashboard = new BrowserWindow({width: 800, height: 600, x: 0, y: 0});
+	dashboard = new BrowserWindow({width: 800, height: 1000, x: 0, y: 0});
 	dashboard.loadURL("file://" + process.cwd() + "/app/dashboard/_dashboardBase.html");
 	dashboard.on('closed', function () {
 		//on dashboard closing, close all projectors

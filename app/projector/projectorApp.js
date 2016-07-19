@@ -12,8 +12,9 @@ const ipc = electron.ipcRenderer;
 	templateUrl: './projectorApp.html',
 })
 export class ProjectorApp {
-	currentNodes:Array=[]
-	currentBg:String="../../assets/bg/videos/video.mp4"
+	currentNodes:Array=[];
+	currentBg:String="../../assets/bg/videos/video.mp4";
+	
 
 	ngOnInit() {
 

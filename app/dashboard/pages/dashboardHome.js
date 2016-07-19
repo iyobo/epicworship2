@@ -1,7 +1,7 @@
 /**
  * Created by iyobo on 6/30/16.
  */
-import {Component,ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 const FadeOutInBackground = require("../../shared/payload/actions/bg/FadeOutInBackground")
 const ShowTextAction = require("../../shared/payload/actions/node/ShowTextAction")
 
@@ -16,10 +16,10 @@ export class DashboardHome {
 	videoPath:String;
 	title:String = "Harking Stuff";
 	text:String = "Hark the Herald Angels sing,\nGlory to the new born King!";
-	activeProjector:String="";
+	activeProjector:String = "";
 
-	constructor(ref: ChangeDetectorRef){
-		this.ref= ref;
+	constructor(ref:ChangeDetectorRef) {
+		this.ref = ref;
 	}
 
 	ngOnInit() {
@@ -32,7 +32,7 @@ export class DashboardHome {
 			this.videoPath = path[0];
 			this.ref.detectChanges();
 		});
-		
+
 	}
 
 	chooseBackground() {
@@ -44,7 +44,7 @@ export class DashboardHome {
 		});
 	}
 
-	launchProjector(){
+	launchProjector() {
 		ipc.send('launchProjector', {
 			returnChannel: "dashhome:launchProjector"
 		});
@@ -52,7 +52,7 @@ export class DashboardHome {
 
 	projectPage() {
 		//Let's send it to the projector
-		ipc.send("toProjector",this.activeProjector, {
+		ipc.send("toProjector", this.activeProjector, {
 			background: new FadeOutInBackground(this.videoPath, 2000),
 			scene: [
 				ShowTextAction.build({
@@ -76,7 +76,12 @@ export class DashboardHome {
 						leave: "fadeOut"
 					},
 					cssOverride: `
-						`
+						// position: fixed;
+					  	// top: 50%;
+					  	// left: 50%;
+					  	/* bring your own prefixes */
+					  	// transform: translate(-50%, -50%);
+					`
 				}),
 				ShowTextAction.build({
 					text: this.title,

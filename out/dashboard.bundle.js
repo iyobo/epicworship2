@@ -54149,7 +54149,7 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var FadeOutInBackground = __webpack_require__(386);
+	var FadeOutInBackground = __webpack_require__(382);
 	var ShowTextAction = __webpack_require__(387);
 
 	var ipc = electron.ipcRenderer;
@@ -54223,7 +54223,7 @@
 							enter: "fadeInLeft",
 							leave: "fadeOut"
 						},
-						cssOverride: "\n\t\t\t\t\t\t"
+						cssOverride: "\n\t\t\t\t\t\t// position: fixed;\n\t\t\t\t\t  \t// top: 50%;\n\t\t\t\t\t  \t// left: 50%;\n\t\t\t\t\t  \t/* bring your own prefixes */\n\t\t\t\t\t  \t// transform: translate(-50%, -50%);\n\t\t\t\t\t"
 					}), ShowTextAction.build({
 						text: this.title,
 						_duration: 600,
@@ -54256,6 +54256,170 @@
 
 	"use strict";
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _set = function set(object, property, value, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent !== null) { set(parent, property, value, receiver); } } else if ("value" in desc && desc.writable) { desc.value = value; } else { var setter = desc.set; if (setter !== undefined) { setter.call(receiver, value); } } return value; };
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _dec, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3; /**
+	                                                                                    * Created by iyobo on 2016-07-15.
+	                                                                                    */
+
+
+	var _PayloadAction2 = __webpack_require__(383);
+
+	var _cerialize = __webpack_require__(384);
+
+	function _initDefineProp(target, property, descriptor, context) {
+		if (!descriptor) return;
+		Object.defineProperty(target, property, {
+			enumerable: descriptor.enumerable,
+			configurable: descriptor.configurable,
+			writable: descriptor.writable,
+			value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+		});
+	}
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+		var desc = {};
+		Object['ke' + 'ys'](descriptor).forEach(function (key) {
+			desc[key] = descriptor[key];
+		});
+		desc.enumerable = !!desc.enumerable;
+		desc.configurable = !!desc.configurable;
+
+		if ('value' in desc || desc.initializer) {
+			desc.writable = true;
+		}
+
+		desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+			return decorator(target, property, desc) || desc;
+		}, desc);
+
+		if (context && desc.initializer !== void 0) {
+			desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+			desc.initializer = undefined;
+		}
+
+		if (desc.initializer === void 0) {
+			Object['define' + 'Property'](target, property, desc);
+			desc = null;
+		}
+
+		return desc;
+	}
+
+	function _initializerWarningHelper(descriptor, context) {
+		throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+	}
+
+	var number = Number; //Annoying syntax highlighter fix
+	var FadeOutInBackground = (_dec = (0, _cerialize.inheritSerialization)(_PayloadAction2.PayloadAction), _dec(_class = (_class2 = function (_PayloadAction) {
+		_inherits(FadeOutInBackground, _PayloadAction);
+
+		function FadeOutInBackground(path, duration) {
+			_classCallCheck(this, FadeOutInBackground);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FadeOutInBackground).call(this, duration));
+
+			_initDefineProp(_this, "path", _descriptor, _this);
+
+			_initDefineProp(_this, "_group", _descriptor2, _this);
+
+			_initDefineProp(_this, "_type", _descriptor3, _this);
+
+			_this.nextDelay = duration / 2;
+			_this.path = path;
+			//TODO: check if image or video and transition accordingly
+			// this.isImage=(/\.(gif|jpg|jpeg|tiff|png)$/i).test(path)
+			// this.isVideo=(/\.(mp4|flv|mov)$/i).test(path)
+			return _this;
+		}
+
+		_createClass(FadeOutInBackground, [{
+			key: "canEnter",
+			value: function canEnter(ctx) {
+				if (ctx.currentBg === this.path) return false; //No need changing bg if it is already active.
+				else return true;
+			}
+		}, {
+			key: "enter",
+			value: function enter(ctx) {
+				//get active background object
+
+				// if(this.isImage){
+				// 	console.log('Image backgrounds not yet supported')
+				// }
+				// else if(this.isVideo){
+				var vid = $("#bgvid");
+				$('#bgvid source').attr('src', this.path);
+				ctx.currentBg = this.path;
+				vid.addClass('animated fadeOut');
+				vid.one('animationend', function () {
+					vid[0].load();
+					vid.removeClass('fadeOut');
+					vid.addClass('fadeIn');
+				});
+				// }
+			}
+		}, {
+			key: "nextDelay",
+
+
+			/**
+	   * We want other actions to continue processing halfway through this background-changing action
+	   * @returns {number}
+	   */
+			get: function get() {
+				return _get(Object.getPrototypeOf(FadeOutInBackground.prototype), "duration", this) / 2;
+			},
+			set: function set(value) {
+				return _set(Object.getPrototypeOf(FadeOutInBackground.prototype), "nextDelay", value, this);
+			}
+		}], [{
+			key: "build",
+			value: function build(data) {
+				var obj = new FadeOutInBackground(data.path || "", data._duration || data.duration || 1000);
+				obj.props = data;
+				return obj;
+			}
+		}]);
+
+		return FadeOutInBackground;
+	}(_PayloadAction2.PayloadAction), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "path", [_cerialize.autoserialize], {
+		enumerable: true,
+		initializer: function initializer() {
+			return this.path;
+		}
+	}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "_group", [_cerialize.autoserialize], {
+		enumerable: true,
+		initializer: function initializer() {
+			return "bg";
+		}
+	}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "_type", [_cerialize.autoserialize], {
+		enumerable: true,
+		initializer: function initializer() {
+			return "FadeOutInBackground";
+		}
+	})), _class2)) || _class);
+	Reflect.defineMetadata("design:paramtypes", [String, Number], FadeOutInBackground);
+
+
+	module.exports = FadeOutInBackground;
+
+/***/ },
+/* 383 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -54268,7 +54432,7 @@
 	                                                                                                 */
 
 
-	var _cerialize = __webpack_require__(383);
+	var _cerialize = __webpack_require__(384);
 
 	function _initDefineProp(target, property, descriptor, context) {
 		if (!descriptor) return;
@@ -54379,7 +54543,7 @@
 		}], [{
 			key: "deserialize",
 			value: function deserialize(data) {
-				return (0, _cerialize.Deserialize)(data, __webpack_require__(385)("./" + data._group + "/" + data._type));
+				return (0, _cerialize.Deserialize)(data, __webpack_require__(386)("./" + data._group + "/" + data._type));
 			}
 		}]);
 
@@ -54413,13 +54577,13 @@
 	Reflect.defineMetadata("design:paramtypes", [Number], PayloadAction);
 
 /***/ },
-/* 383 */
+/* 384 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(384);
+	module.exports = __webpack_require__(385);
 
 /***/ },
-/* 384 */
+/* 385 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {var win = null;
@@ -55008,14 +55172,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 385 */
+/* 386 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./PayloadAction": 382,
-		"./PayloadAction.js": 382,
-		"./bg/FadeOutInBackground": 386,
-		"./bg/FadeOutInBackground.js": 386,
+		"./PayloadAction": 383,
+		"./PayloadAction.js": 383,
+		"./bg/FadeOutInBackground": 382,
+		"./bg/FadeOutInBackground.js": 382,
 		"./node/ShowTextAction": 387,
 		"./node/ShowTextAction.js": 387
 	};
@@ -55030,163 +55194,8 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 385;
+	webpackContext.id = 386;
 
-
-/***/ },
-/* 386 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _set = function set(object, property, value, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent !== null) { set(parent, property, value, receiver); } } else if ("value" in desc && desc.writable) { desc.value = value; } else { var setter = desc.set; if (setter !== undefined) { setter.call(receiver, value); } } return value; };
-
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-	var _dec, _class, _desc, _value, _class2, _descriptor, _descriptor2, _descriptor3; /**
-	                                                                                    * Created by iyobo on 2016-07-15.
-	                                                                                    */
-
-
-	var _PayloadAction2 = __webpack_require__(382);
-
-	var _cerialize = __webpack_require__(383);
-
-	function _initDefineProp(target, property, descriptor, context) {
-		if (!descriptor) return;
-		Object.defineProperty(target, property, {
-			enumerable: descriptor.enumerable,
-			configurable: descriptor.configurable,
-			writable: descriptor.writable,
-			value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
-		});
-	}
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
-		var desc = {};
-		Object['ke' + 'ys'](descriptor).forEach(function (key) {
-			desc[key] = descriptor[key];
-		});
-		desc.enumerable = !!desc.enumerable;
-		desc.configurable = !!desc.configurable;
-
-		if ('value' in desc || desc.initializer) {
-			desc.writable = true;
-		}
-
-		desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-			return decorator(target, property, desc) || desc;
-		}, desc);
-
-		if (context && desc.initializer !== void 0) {
-			desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-			desc.initializer = undefined;
-		}
-
-		if (desc.initializer === void 0) {
-			Object['define' + 'Property'](target, property, desc);
-			desc = null;
-		}
-
-		return desc;
-	}
-
-	function _initializerWarningHelper(descriptor, context) {
-		throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
-	}
-
-	var number = Number; //Annoying syntax highlighter fix
-	var FadeOutInBackground = (_dec = (0, _cerialize.inheritSerialization)(_PayloadAction2.PayloadAction), _dec(_class = (_class2 = function (_PayloadAction) {
-		_inherits(FadeOutInBackground, _PayloadAction);
-
-		function FadeOutInBackground(path, duration) {
-			_classCallCheck(this, FadeOutInBackground);
-
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FadeOutInBackground).call(this, duration));
-
-			_initDefineProp(_this, "path", _descriptor, _this);
-
-			_initDefineProp(_this, "_group", _descriptor2, _this);
-
-			_initDefineProp(_this, "_type", _descriptor3, _this);
-
-			_this.nextDelay = duration / 2;
-			_this.path = path;
-			return _this;
-		}
-
-		_createClass(FadeOutInBackground, [{
-			key: "canEnter",
-			value: function canEnter(ctx) {
-				if (ctx.currentBg === this.path) return false; //No need changing bg if it is already active.
-				else return true;
-			}
-		}, {
-			key: "enter",
-			value: function enter(ctx) {
-				var vid = $("#bgvid");
-				$('#bgvid source').attr('src', this.path);
-				ctx.currentBg = this.path;
-
-				vid.addClass('animated fadeOut');
-				vid.one('animationend', function () {
-					vid[0].load();
-					vid.removeClass('fadeOut');
-					vid.addClass('fadeIn');
-				});
-			}
-		}, {
-			key: "nextDelay",
-
-
-			/**
-	   * We want other actions to continue processing halfway through this background-changing action
-	   * @returns {number}
-	   */
-			get: function get() {
-				return _get(Object.getPrototypeOf(FadeOutInBackground.prototype), "duration", this) / 2;
-			},
-			set: function set(value) {
-				return _set(Object.getPrototypeOf(FadeOutInBackground.prototype), "nextDelay", value, this);
-			}
-		}], [{
-			key: "build",
-			value: function build(data) {
-				var obj = new FadeOutInBackground(data.path || "", data._duration || data.duration || 1000);
-				obj.props = data;
-				return obj;
-			}
-		}]);
-
-		return FadeOutInBackground;
-	}(_PayloadAction2.PayloadAction), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "path", [_cerialize.autoserialize], {
-		enumerable: true,
-		initializer: function initializer() {
-			return this.path;
-		}
-	}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "_group", [_cerialize.autoserialize], {
-		enumerable: true,
-		initializer: function initializer() {
-			return "bg";
-		}
-	}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "_type", [_cerialize.autoserialize], {
-		enumerable: true,
-		initializer: function initializer() {
-			return "FadeOutInBackground";
-		}
-	})), _class2)) || _class);
-	Reflect.defineMetadata("design:paramtypes", [String, Number], FadeOutInBackground);
-
-
-	module.exports = FadeOutInBackground;
 
 /***/ },
 /* 387 */
@@ -55201,9 +55210,9 @@
 	                                                                                    */
 
 
-	var _PayloadAction2 = __webpack_require__(382);
+	var _PayloadAction2 = __webpack_require__(383);
 
-	var _cerialize = __webpack_require__(383);
+	var _cerialize = __webpack_require__(384);
 
 	function _initDefineProp(target, property, descriptor, context) {
 		if (!descriptor) return;

@@ -16,6 +16,9 @@ class FadeOutInBackground extends PayloadAction {
 		super(duration);
 		this.nextDelay = duration / 2;
 		this.path = path;
+		//TODO: check if image or video and transition accordingly
+		// this.isImage=(/\.(gif|jpg|jpeg|tiff|png)$/i).test(path)
+		// this.isVideo=(/\.(mp4|flv|mov)$/i).test(path)
 	}
 
 	static build(data) {
@@ -44,16 +47,26 @@ class FadeOutInBackground extends PayloadAction {
 	}
 
 	enter(ctx) {
-		var vid = $("#bgvid");
-		$('#bgvid source').attr('src', this.path);
-		ctx.currentBg = this.path;
+		//get active background object
 
-		vid.addClass('animated fadeOut');
-		vid.one('animationend', function () {
-			vid[0].load();
-			vid.removeClass('fadeOut');
-			vid.addClass('fadeIn');
-		});
+
+		// if(this.isImage){
+		// 	console.log('Image backgrounds not yet supported')
+		// }
+		// else if(this.isVideo){
+			var vid = $("#bgvid");
+			$('#bgvid source').attr('src', this.path);
+			ctx.currentBg = this.path;
+			vid.addClass('animated fadeOut');
+			vid.one('animationend', function () {
+				vid[0].load();
+				vid.removeClass('fadeOut');
+				vid.addClass('fadeIn');
+			});
+		// }
+
+
+
 	}
 }
 
