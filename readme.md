@@ -1,5 +1,6 @@
 # EpicWorship 2
 
+This Project has moved to https://github.com/iyobo/epicworship2.
 Lighter, Faster, Greater.
 
 Migrating [EpicWorship v1](https://github.com/iyobo/epicworship) from Java to a fully-loaded ElectronJS/Angular 2 Desktop app.
